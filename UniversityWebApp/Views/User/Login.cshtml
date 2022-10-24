@@ -1,69 +1,46 @@
-﻿@model UniversityWebApp.ViewModels.LoginUserViewModel
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script type="text/javascript" src="~/Scripts/loginScripts.js"></script>
 
-@{
-    ViewBag.Title = "Login";
-}
-@section Stylesheets {
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-}
-
-<h2>Login</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.RememberMe)
-                    @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+</head>
+<body>
+    <div class="login-form">
+        <form>
+            <h2>Login</h2>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <label class="control-label col-md-2" for="email">Email: </label>
+                    <input type="email" id="email" name="email" class="form-control" />
                 </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Login" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-10">
+                    <label class="control-label col-md-2" for="password">Password: </label>
+                    <input type="password" id="password" name="password" class="form-control" />
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <label class="control-label col-md-2" for="checkbox">Remember Me </label>
+                    <input type="checkbox" id="checkbox" name="checkbox" class="checkbox-inline" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <button id="register" onclick="createAccount()">Create an account</button>
+                    <button id="login" onclick="signIn()">Login</button>
+                </div>
+            </div>
+        </form>
     </div>
-    if (ViewBag.Error != null)
-    {
-        <div style="width: max-content" class="alert alert-danger">@ViewBag.Error</div>
-    }
-    if (ViewBag.Success != null)
-    {
-        <div style="width: max-content" class="alert alert-success">@ViewBag.Success</div>
-    }
-}
+</body>
 
-<div>
-    @Html.ActionLink("Create an account", "Register")
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+</html>

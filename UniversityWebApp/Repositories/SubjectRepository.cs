@@ -12,7 +12,7 @@ namespace UniversityWebApp.Repositories
     {
         private readonly DatabaseHelper databaseHelper = new DatabaseHelper();
 
-        public void Create(Subject entity)
+        public int Create(Subject entity)
         {
             throw new NotImplementedException();
         }
@@ -41,13 +41,6 @@ namespace UniversityWebApp.Repositories
                 }
                 _conn.Close();
             }
-            var subjectTip = new Subject()
-            {
-                SubjectId = -1,
-                SubjectName = "--- Select Subject ----"
-
-            };
-            subjects.Insert(0, subjectTip);
             return subjects;
         }
 

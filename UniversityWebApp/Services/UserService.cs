@@ -2,6 +2,7 @@
 using UniversityWebApp.Helper;
 using UniversityWebApp.Models;
 using UniversityWebApp.Repositories;
+using UniversityWebApp.ViewModels;
 
 namespace UniversityWebApp.Services
 {
@@ -24,13 +25,13 @@ namespace UniversityWebApp.Services
             return user;
         }
 
-        public User Authenticate(string email, string password)
+        public User Authenticate(LoginUserViewModel loginVm)
         {
-            User user = GetUser(email);
+            User user = GetUser(loginVm.Email);
             if (user != null)
             {
                 HashingHelper hashingHelper = new HashingHelper();
-                if (!hashingHelper.VerifyHash(password, user.Salt, user.PasswordHash))
+                if (!hashingHelper.VerifyHash(loginVm.Password, user.Salt, user.PasswordHash))
                     return null;
             }
             return user;

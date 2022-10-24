@@ -1,13 +1,19 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-}
-@section Stylesheets {
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+﻿<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Home</title>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+        <script type="text/javascript" src="~/Scripts/homeScripts.js"></script>
+    </head>
+    <body onload="loading()">
+        <h3 id="usernameDisplay">You are signed in with: </h3>
+        <button onclick="redirectToStudentRegistration()">Student Registration</button>
+        <button onclick="logout()">Logout</button>
+    </body>
 
-}
-<h2>Index</h2>
-
+@*<p>You are signed in with: </p><h3></h3>
 You are signed with: @HttpContext.Current.User.Identity.Name
 
 @if (Request.IsAuthenticated)
@@ -21,5 +27,6 @@ You are signed with: @HttpContext.Current.User.Identity.Name
         <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
     }
 
-}
+}*@
+</html>
 

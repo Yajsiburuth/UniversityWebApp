@@ -10,7 +10,7 @@ namespace UniversityWebApp.Models
     {
         public int GuardianId { get; set; }
         public string FirstName { get; set; }
-        public int LastName { get; set; }
+        public string LastName { get; set; }
         public string PhoneNumber { get; set; }
     }
 }

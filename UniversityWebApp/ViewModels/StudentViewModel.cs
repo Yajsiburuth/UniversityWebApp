@@ -34,7 +34,7 @@ namespace UniversityWebApp.ViewModels
         public string Nid { get; set; }
 
         [Display(Name = "Subject")]
-        public int SelectedSubject { get; set; }
+        public Subject SelectedSubject { get; set; }
         public IEnumerable<Subject> subjectList { get; set; }
 
         //[Display(Name = "Subject 1 Name")]

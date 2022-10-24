@@ -8,10 +8,9 @@ namespace UniversityWebApp.Models
 {
     public class Grade
     {
-        public int StudentId;
-        public int SubjectId { get; set; }
-        public Student Subject { get; set; }
-        public ResultGrade Result { get; set; }
+        public int StudentId { get; set; }
+        public List<int> SubjectId { get; set; }
+        public List<ResultGrade> Result { get; set; }
 
     }
 }

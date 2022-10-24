@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 using UniversityWebApp.Models;
 using UniversityWebApp.Repositories;
 using UniversityWebApp.Services;
@@ -12,24 +13,22 @@ namespace UniversityWebApp.Controllers
     public class UserController : Controller
     {
         private readonly UserService _userService = new UserService(new UserRepository());
+
+        [HttpGet]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(UserViewModel userVm)
+        public JsonResult Register(UserViewModel userVm)
         {
             if (_userService.GetUser(userVm.Email) != null)
-                ViewBag.Error = "Email already in use";
+                return Json(new { result = false, url = Url.Action("Login", "User") });
 
-            if (ViewBag.Error == null)
-            {
-                User user = _userService.Register(userVm.Email, userVm.Password);
-                ViewBag.Success = "Registration Successful";
-            }
-            return View();
+            User user = _userService.Register(userVm.Email, userVm.Password);
+            return Json(new { result = true, url = Url.Action("Login", "User") });
+
         }
 
         [HttpGet]
@@ -39,18 +38,13 @@ namespace UniversityWebApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginUserViewModel loginUserVm, string ReturnUrl = "")
+        public JsonResult Login(LoginUserViewModel loginUserVm)
         {
-            User user = _userService.Authenticate(loginUserVm.Email, loginUserVm.Password);
-            
-            if (user == null)
+            User user = _userService.Authenticate(loginUserVm);
+            if (user != null)
             {
-                ViewBag.Error = "Invalid Credentials";
-            }
-
-            if (ViewBag.Error == null)
-            {
+                this.Session["CurrentUser"] = user;
+                this.Session["CurrentRole"] = user.Role;
                 int timeout = loginUserVm.RememberMe ? 525600 : 20;
                 var ticket = new FormsAuthenticationTicket(user.UserId.ToString(), loginUserVm.RememberMe, timeout);
                 string encrypted = FormsAuthentication.Encrypt(ticket);
@@ -58,19 +52,15 @@ namespace UniversityWebApp.Controllers
                 cookie.Expires = DateTime.Now.AddMinutes(timeout);
                 cookie.HttpOnly = true;
                 Response.Cookies.Add(cookie);
-
-                if (Url.IsLocalUrl(ReturnUrl))
-                {
-                    return Redirect(ReturnUrl);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-
             }
 
-            return View();
+            return Json(new { result = user == null ? false : true, url = Url.Action("Index", "Home") });
+        }
+
+        [HttpGet]
+        public JsonResult GetUser()
+        {
+            return Json(new { user = this.Session["CurrentUser"] }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]

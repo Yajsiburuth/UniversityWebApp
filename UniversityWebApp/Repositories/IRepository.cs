@@ -11,7 +11,7 @@ namespace UniversityWebApp.Repositories
     {
         IEnumerable<T> GetAll();
         T Find(int id);
-        void Create(T entity);
+        int Create(T entity);
         void Update(T entity);
 
     }

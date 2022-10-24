@@ -1,142 +1,111 @@
-﻿@model UniversityWebApp.ViewModels.StudentViewModel
-
-@{
-    ViewBag.Title = "RegisterStudent";
-}
-
-@section Stylesheets {
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-}
-
-<h2>Student Registration</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
+    <script type="text/javascript" src="~/Scripts/studentScripts.js"></script>
+</head>
+<body onload="loading()">
+    <h2>Student Registration</h2>
     <div class="form-horizontal">
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <form>
             <fieldset>
                 <legend>Student Details</legend>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label for="FirstName" class="control-label col-md-2">Firstname</label>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        <input required type="text" id="FirstName" name="FirstName" class="form-control" />
                     </div>
                 </div>
-
                 <div class="form-group">
-                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label for="LastName" class="control-label col-md-2">Lastname</label>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        <input required type="text" id="LastName" name="LastName" class="form-control" />
                     </div>
                 </div>
-
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label for="PhoneNumber" class="control-label col-md-2">Phone Number</label>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                        <input required type="text" id="PhoneNumber" name="PhoneNumber" class="form-control" />
                     </div>
                 </div>
-
                 <div class="form-group">
-                    @Html.LabelFor(model => model.DoB, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label for="DoB" class="control-label col-md-2">Date of birth</label>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.DoB, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.DoB, "", new { @class = "text-danger" })
+                        <input required type="date" id="DoB" name="DoB" class="form-control" />
                     </div>
                 </div>
-
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Nid, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label for="Nid" class="control-label col-md-2">National Id</label>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Nid, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Nid, "", new { @class = "text-danger" })
+                        <input required type="text" id="Nid" name="Nid" class="form-control" />
                     </div>
-                </div>
-                <button onclick="addResultRow()" type="button">Add Result</button>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SelectedSubject, htmlAttributes: new { @class = "control-label col-md-2"})
-                    <table id="AddItemsTable">
-                        <tr>
-                            <th>
-                                @Html.DropDownListFor(Model => Model.SelectedSubject, new SelectList(Model.subjectList, "SubjectId", "SubjectName"), htmlAttributes: new { @class = "form-control", id = "Subjects" })
-                                @Html.ValidationMessageFor(x => x.SelectedSubject, "", new { @class = "text-danger" })
-                                @Html.DisplayNameFor(model => model.Grades[0].Result)</th>
-                        </tr>
-                    </table>
                 </div>
             </fieldset>
-        </form>
-        <form>
+            <fieldset>
+                <legend>Result Details</legend>
+                <div class="form-group">
+                    <table id="AddItemsTable" class="table-condensed">
+                        <tr>
+                            <th>
+                                <label for="dropdownSubjects0" class="control-label col-md-2">Subject</label>
+                            </th>
+                            <th>
+                                <select required onchange="checkValue()" id="dropdownSubjects0" name="dropdownSubjects0" class="form-control">
+                                </select>
+                            </th>
+                            <th>
+                                <label for="Grade[0].Result" class="control-label col-md-2">Result</label>
+                            </th>
+                            <th>
+                                <select required class="form-control" id="Grade[0].Result" name="Grade[0].Result">
+                                    <option label="-" value=""></option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    <option value="E">E</option>
+                                    <option value="F">F</option>
+                                </select>
+                            </th>
+                        </tr>
+                    </table>
+
+                    <button class="fa fa-plus-circle" style="color:darkblue; border:0;background-color: transparent;font-size: large;" onclick="addResultRow()" type="button" id="addButton"></button>
+                </div>
+            </fieldset>
             <fieldset>
                 <legend>Guardian Details</legend>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.GuardianFirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label for="guardianFirstName" class="control-label col-md-2">Guardian Firstname</label>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.GuardianFirstName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.GuardianFirstName, "", new { @class = "text-danger" })
+                        <input required type="text" id="guardianFirstName" name="guardianFirstName" class="form-control" />
                     </div>
                 </div>
-
                 <div class="form-group">
-                    @Html.LabelFor(model => model.GuardianLastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label for="guardianLastName" class="control-label col-md-2">Guardian Lastname</label>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.GuardianLastName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.GuardianLastName, "", new { @class = "text-danger" })
+                        <input required type="text" id="guardianLastName" name="guardianLastName" class="form-control" />
                     </div>
                 </div>
-
                 <div class="form-group">
-                    @Html.LabelFor(model => model.GuardianPhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label for="guardianPhoneNumber" class="control-label col-md-2">Guardian Phone Number</label>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.GuardianPhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.GuardianPhoneNumber, "", new { @class = "text-danger" })
+                        <input required type="text" id="guardianPhoneNumber" name="guardianPhoneNumber" class="form-control" />
                     </div>
                 </div>
             </fieldset>
-        </form>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input onclick="createStudent()" type="submit" value="Create" class="btn btn-default" />
+                </div>
             </div>
-        </div>
+        </form>
     </div>
-}
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    <script>
-        var counter = 0;
-        function addResultRow() {
-            if (counter < 3) {
-                var table = document.getElementById("AddItemsTable");
-                var row = table.insertRow(-1);
-                var cell1 = row.insertCell(0);
-
-                cell1.innerHTML = '<input type="text" id="' + counter + '"name="Grade[' + counter + '].Result"/> <button class="fa fa-close" style="color:red; border:0;background-color: transparent;font-size: large;" onclick="removeResultRow(this.id)" id="' + counter + '"/>';
-                counter++;
-                if (counter != 0) {
-                    var button = document.getElementById(counter);
-                    button.remove();
-                }
-            }
-        }
-
-        function removeResultRow() {
-            var td = event.target.parentNode;
-            var tr = td.parentNode;
-            tr.parentNode.removeChild(tr);
-            counter--;
-        }
-    </script>
-}
+</body>
+</html>

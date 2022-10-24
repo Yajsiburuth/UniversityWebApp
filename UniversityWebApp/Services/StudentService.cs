@@ -14,12 +14,10 @@ namespace UniversityWebApp.Services
             _studentRepository = studentRepository;
         }
 
-        public Student RegisterStudent(Student student)
+        public int RegisterStudent(Student student)
         {
-            int currentUserId = int.Parse(HttpContext.Current.User.Identity.Name);
-            student.UserId = currentUserId;
-            _studentRepository.Create(student);
-            return student;
+            int studentId = _studentRepository.Create(student);
+            return studentId;
         }
 
 

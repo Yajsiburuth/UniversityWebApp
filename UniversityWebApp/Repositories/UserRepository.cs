@@ -10,14 +10,14 @@ namespace UniversityWebApp.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly DatabaseHelper databaseHelper = new DatabaseHelper();
+        private readonly DatabaseHelper _databaseHelper = new DatabaseHelper();
 
         public UserRepository() { }
 
         public IEnumerable<User> GetAll()
         {
             List<User> users = new List<User>();
-            using (SqlConnection _conn = databaseHelper.CreateConnection())
+            using (SqlConnection _conn = _databaseHelper.CreateConnection())
             {
                 _conn.Open();
                 SqlCommand command = new SqlCommand("SELECT * FROM user", _conn);
@@ -40,7 +40,7 @@ namespace UniversityWebApp.Repositories
         public User Find(int id)
         {
             User user = new User();
-            using (SqlConnection _conn = databaseHelper.CreateConnection())
+            using (SqlConnection _conn = _databaseHelper.CreateConnection())
             {
                 _conn.Open();
                 SqlCommand command = new SqlCommand("SELECT * FROM [user] WHERE id=@Id", _conn);
@@ -67,7 +67,7 @@ namespace UniversityWebApp.Repositories
         public User Find(string email)
         {
             User user = new User();
-            using (SqlConnection _conn = databaseHelper.CreateConnection())
+            using (SqlConnection _conn = _databaseHelper.CreateConnection())
             {
                 _conn.Open();
                 SqlCommand command = new SqlCommand("SELECT * FROM [user] WHERE email=@Email", _conn);
@@ -90,9 +90,10 @@ namespace UniversityWebApp.Repositories
             return user;
         }
 
-        public void Create(User user)
+        public int Create(User user)
         {
-            using (SqlConnection _conn = databaseHelper.CreateConnection())
+            int rows = 0;
+            using (SqlConnection _conn = _databaseHelper.CreateConnection())
             {
                 _conn.Open();
                 SqlCommand command = new SqlCommand("INSERT INTO [user] (email, password, salt, role) VALUES (@Email, @Password, @Salt, @Role)",_conn);
@@ -100,15 +101,16 @@ namespace UniversityWebApp.Repositories
                 command.Parameters.AddWithValue("@Password", user.PasswordHash);
                 command.Parameters.AddWithValue("@Salt", user.Salt);
                 command.Parameters.AddWithValue("@Role", (int)user.Role);
-                int rows = command.ExecuteNonQuery();
+                rows = command.ExecuteNonQuery();
                 _conn.Close();
             }
+            return rows;
 
         }
 
         public void Update(User user)
         {
-            using (SqlConnection _conn = databaseHelper.CreateConnection())
+            using (SqlConnection _conn = _databaseHelper.CreateConnection())
             {
                 _conn.Open();
                 SqlCommand command = new SqlCommand("UPDATE user SET email = @Email, password = @Password, role = @Role WHERE id = @id");
