@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Security.Cryptography;
 using UniversityWebApp.Helper;
 using UniversityWebApp.Models;
 
@@ -108,13 +106,16 @@ namespace UniversityWebApp.Repositories
             using (SqlConnection _conn = _databaseHelper.CreateConnection())
             {
                 _conn.Open();
-                SqlCommand command = new SqlCommand("UPDATE student SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, date_of_birth=@DoB, guardian_name=@GuardianName, national_id=@Nid");
+                SqlCommand command = new SqlCommand("UPDATE student SET first_name=@FirstName, last_name=@LastName, phone_number=@PhoneNumber, date_of_birth=@DoB, guardian_id=@GuardianId, national_id=@Nid, user_id=@UserId, status=@Status");
                 command.Parameters.AddWithValue("@FirstName", student.FirstName);
                 command.Parameters.AddWithValue("@LastName", student.LastName);
                 command.Parameters.AddWithValue("@PhoneNumber", student.PhoneNumber);
                 command.Parameters.AddWithValue("@DoB", student.DoB);
                 command.Parameters.AddWithValue("@GuardianId", student.GuardianId);
                 command.Parameters.AddWithValue("@Nid", student.Nid);
+                command.Parameters.AddWithValue("@UserId", student.UserId);
+                command.Parameters.AddWithValue("@Status", student.Status);
+
                 int rows = command.ExecuteNonQuery();
                 _conn.Close();
             }

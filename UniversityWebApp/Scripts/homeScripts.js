@@ -1,7 +1,12 @@
-﻿function loading() {
+﻿function loadEmail() {
     loadData("/User/GetUser").then((response) => {
-        if (response.result) {
+        if (response.user != null) {
             toastr.success("Logged In");
+            var header = document.getElementById("emailDisplay");
+            var existingText = header.innerText;
+            var userEmail = response['user']['Email'];
+            var outputText = existingText.concat(" ", userEmail);
+            header.innerText = outputText;
         } else {
             toastr.error("Unable to load");
         }
@@ -12,22 +17,9 @@
 }
 
 function loadData(url) {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function (data) {
-                var existingText = $("h3").text();
-                console.log(existingText);
-                var userEmail = data['user']['Email'];
-                var outputText = existingText.concat(" ", userEmail);
-                $("h3").text(outputText);
-            },
-            error: function (error) {
-                reject(error)
-            }
-        })
-    });
+    return fetch(url)
+        .then(response => { return response.json(); })
+        .catch((error) => console.log(error))
 }
 
 function redirectToStudentRegistration() {

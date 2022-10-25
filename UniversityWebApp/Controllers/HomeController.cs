@@ -1,11 +1,7 @@
-﻿using System.Web;
-using System;
-using System.Web.Mvc;
-using System.Web.Security;
+﻿using System.Web.Mvc;
 using UniversityWebApp.Models;
 using UniversityWebApp.Repositories;
 using UniversityWebApp.Services;
-using UniversityWebApp.ViewModels;
 
 namespace UniversityWebApp.Controllers
 {
@@ -42,7 +38,7 @@ namespace UniversityWebApp.Controllers
         public JsonResult GetSubjects()
         {
             var subjectList = _subjectService.GetSubjects();
-            return Json(new { subjectList }, JsonRequestBehavior.AllowGet);
+            return Json(new { result = true, subjectList }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -55,10 +51,6 @@ namespace UniversityWebApp.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            if (Request.IsAuthenticated)
-            {
-
-            }
             var loggedUser = Session["CurrentUser"] as User;
             var view = View(loggedUser);
 
@@ -69,10 +61,6 @@ namespace UniversityWebApp.Controllers
         [Authorize]
         public ActionResult Admin()
         {
-            if (Request.IsAuthenticated)
-            {
-
-            }
             var loggedUser = Session["CurrentUser"] as User;
             var view = View(loggedUser);
             view.MasterName = "~/Views/Shared/_Layout.cshtml";
@@ -82,7 +70,7 @@ namespace UniversityWebApp.Controllers
 
         public JsonResult GetStudentsSummary()
         {
-
+            // TODO FetchStudentsSummary
             return Json(new { });
         }
     }

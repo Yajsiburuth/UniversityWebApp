@@ -8,10 +8,10 @@ using UniversityWebApp.Models;
 
 namespace UniversityWebApp.Repositories
 {
-    public class GuardianRepository : IRepository<Guardian>
+    public class GuardianRepository : IGuardianRepository
     {
         private readonly DatabaseHelper _databaseHelper;
-        public GuardianRepository(){ _databaseHelper = new DatabaseHelper(); }
+        public GuardianRepository() { _databaseHelper = new DatabaseHelper(); }
 
         public int Create(Guardian guardian)
         {
@@ -40,6 +40,23 @@ namespace UniversityWebApp.Repositories
         public Guardian Find(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public int Find(string phoneNumber)
+        {
+            int guardianId = 0;
+            using(SqlConnection _conn = _databaseHelper.CreateConnection())
+            {
+                _conn.Open();
+                SqlCommand command = new SqlCommand("SELECT id FROM guardian WHERE phone_number=@PhoneNumber", _conn);
+                command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                object returnObj = command.ExecuteScalar();
+                if (returnObj != null)
+                    guardianId = int.Parse(returnObj.ToString());
+
+                _conn.Close();
+            }
+            return guardianId;
         }
 
         public IEnumerable<Guardian> GetAll()

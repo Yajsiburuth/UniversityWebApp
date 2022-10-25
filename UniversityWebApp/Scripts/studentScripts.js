@@ -2,25 +2,19 @@
 var subjectList;
 var dictSubjectList = [];
 
-$(function () {
+document.addEventListener("DOMContentLoaded", () => {
     let form = document.querySelector('form');
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         return false;
     });
-});
+})
 
 function addResultRow() {
     counter++;
     if (counter < 3) {
         var table = document.getElementById("AddItemsTable");
         var row = table.insertRow(-1);
-
-        /*row.innerHTML = '<th><label for="dropdownSubjects" class="control-label col-md-2">Subject</label></th>' +
-            '<th><select onchange="checkValue()" id="dropdownSubjects'+ counter +'" name="dropdownSubjects'+ counter +'" class="form-control"></select></th>' +
-            '<th><label for="Grade[' + counter + '].Result" class="control-label col-md-2">Result</label></th>' +
-            '<th><input type="text" id="Grade[' + counter + '].Result" "name="Grade[' + counter + '].Result"/></th>' +
-            '<th><button class="fa fa-close" style="color:red; border:0;background-color: transparent;font-size: large;" onclick="removeResultRow()" id="removeButton' + counter + '" /></th>';*/
 
         row.innerHTML = '<th><label for="dropdownSubjects" class="control-label col-md-2">Subject</label></th>' +
             '<th><select required onchange="checkValue()" id="dropdownSubjects' + counter + '" name="dropdownSubjects' + counter + '" class="form-control"></select></th>' +
@@ -38,7 +32,7 @@ function addResultRow() {
 
         var dropdown = document.getElementById("dropdownSubjects" + counter);
         addSubjectsToDropdown(dropdown);
-        $('#removeButton' + (counter - 1)).hide();
+        document.querySelector('#removeButton' + (counter - 1)).hide();
         if (counter > 1) {
             document.getElementById('addButton').style.display = 'none';
         }
@@ -56,7 +50,7 @@ function removeResultRow() {
     }
     counter--;
     if (counter > 0) {
-        $('#removeButton' + counter).show();
+        document.querySelector('#removeButton' + counter).show();
     }
     if (counter < 3) {
         document.getElementById('addButton').style.display = 'block';
@@ -93,34 +87,28 @@ function checkValue() {
     console.table(dictSubjectList);
 }
 
-function loading() {
-    loadDropdown("/Home/GetSubjects").then((response) => {
+
+function loadData(url) {
+    return fetch(url)
+               .then(response => { return response.json(); })
+               .catch((error) => console.log(error))
+}
+
+function loadDropdown() {
+    loadData("/Home/GetSubjects").then((response) => {
         if (response.result) {
             toastr.success("Loaded");
+            subjectList = response.subjectList;
+            var dropdown = document.getElementById("dropdownSubjects0");
+            addSubjectsToDropdown(dropdown);
         } else {
+            console.log()
             toastr.error("Unable to load");
         }
     })
         .catch((error) => {
             toastr.error('Unable to make request!');
         });
-}
-
-function loadDropdown(url) {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function (data) {
-                subjectList = data['subjectList'];
-                var dropdown = document.getElementById("dropdownSubjects0");
-                addSubjectsToDropdown(dropdown);
-            },
-            error: function (error) {
-                reject(error)
-            }
-        })
-    });
 }
 
 function addSubjectsToDropdown(dropdown) {
@@ -139,16 +127,16 @@ function addSubjectsToDropdown(dropdown) {
 }
 
 function createStudent() {
-    var firstName = $('#FirstName').val();
-    var lastName = $('#LastName').val();
-    var phoneNumber = $('#PhoneNumber').val();
-    var dateOfBirth = $('#DoB').val();
-    var nationalId = $('#Nid').val();
+    var firstName = document.querySelector('#FirstName').value;
+    var lastName = document.querySelector('#LastName').value;
+    var phoneNumber = document.querySelector('#PhoneNumber').value;
+    var dateOfBirth = document.querySelector('#DoB').value;
+    var nationalId = document.querySelector('#Nid').value;
     var guardianId;
     var studentId;
-    var guardianFirstName = $('#guardianFirstName').val();
-    var guardianLastName = $('#guardianLastName').val();
-    var guardianPhoneNumber = $('#guardianPhoneNumber').val();
+    var guardianFirstName = document.querySelector('#guardianFirstName').value;
+    var guardianLastName = document.querySelector('#guardianLastName').value;
+    var guardianPhoneNumber = document.querySelector('#guardianPhoneNumber').value;
     var selectedSubjectList = [];
     var selectedSubjectResultList = [];
     console.log(firstName, lastName, phoneNumber, dateOfBirth, nationalId, guardianFirstName, guardianLastName, guardianPhoneNumber);
@@ -163,6 +151,7 @@ function createStudent() {
     console.table(selectedSubjectList);
     console.table(selectedSubjectResultList);
     guardianDataObj = { FirstName: guardianFirstName, LastName: guardianLastName, PhoneNumber: guardianPhoneNumber };
+
     sendData(guardianDataObj, "/Home/CreateGuardian").then((response) => {
         if (response.result) {
             guardianId = response.guardianId;
@@ -177,6 +166,7 @@ function createStudent() {
                     sendData(gradeDataObj, "/Home/AddResults").then((response) => {
                         if (response.result) {
                             toastr.success("Registered sucessfully!");
+                            window.location = "/Home/Index"
                         } else {
                             toastr.error("Unable to add results");
                             return false;
@@ -206,19 +196,14 @@ function createStudent() {
 
 }
 
-function sendData(Data, url) {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: Data,
-            dataType: "json",
-            success: function (data) {
-                resolve(data)
-            },
-            error: function (error) {
-                reject(error)
-            }
-        })
-    });
+function sendData(dataObj, url) {
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataObj)
+    })
+        .then(response => { return response.json(); })
+        .catch((error) => console.log(error))
 }

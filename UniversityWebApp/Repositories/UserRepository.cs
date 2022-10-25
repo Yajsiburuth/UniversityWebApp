@@ -56,7 +56,7 @@ namespace UniversityWebApp.Repositories
                     user.Email = reader.GetString(1);
                     user.PasswordHash = (byte[])reader.GetValue(2);
                     user.Salt = (byte[])reader.GetValue(3);
-                    user.Role = Role.User;
+                    user.Role = (Role)reader.GetByte(4);
                 }
                 _conn.Close();
             }
@@ -83,7 +83,7 @@ namespace UniversityWebApp.Repositories
                         user.Email = reader.GetString(1);
                         user.PasswordHash = (byte[]) reader.GetValue(2);
                         user.Salt = (byte[]) reader.GetValue(3);
-                        user.Role = Role.User;
+                        user.Role =  (Role)reader.GetByte(4);
                     }
                 _conn.Close();
                 }
