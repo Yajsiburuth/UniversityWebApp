@@ -12,9 +12,7 @@ namespace UniversityWebApp.Repositories
     {
         private readonly DatabaseHelper _databaseHelper = new DatabaseHelper();
 
-        public GradeRepository()
-        {
-
+        public GradeRepository(){_databaseHelper = new DatabaseHelper();
         }
         public int Create(Grade grade)
         {
@@ -30,7 +28,7 @@ namespace UniversityWebApp.Repositories
                     "VALUES (@StudentId, @SubjectId, @Result); ", _conn);
                     command.Parameters.AddWithValue("@StudentId", grade.StudentId);
                     command.Parameters.AddWithValue("@SubjectId", subjectResult.Subject);
-                    command.Parameters.AddWithValue("@Result", subjectResult.Result.ToString());
+                    command.Parameters.AddWithValue("@Result",  (byte) subjectResult.Result);
                     rows = command.ExecuteNonQuery();
                 }
                 _conn.Close();

@@ -54,7 +54,7 @@ namespace UniversityWebApp.Controllers
                 Response.Cookies.Add(cookie);
             }
 
-            return Json(new { result = user == null ? false : true, url = Url.Action("Index", "Home") });
+            return Json(new { result = user == null ? false : true, url = user != null ? user.Role == Role.User ? Url.Action("Index", "Home") : Url.Action("Admin", "Home") : Url.Action("Index", "Home")});
         }
 
         [HttpGet]

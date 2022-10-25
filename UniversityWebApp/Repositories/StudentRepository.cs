@@ -11,11 +11,8 @@ namespace UniversityWebApp.Repositories
 {
     public class StudentRepository : IRepository<Student>
     {
-        private readonly DatabaseHelper _databaseHelper = new DatabaseHelper();
-        public StudentRepository()
-        {
-
-        }
+        private readonly DatabaseHelper _databaseHelper;
+        public StudentRepository(){ _databaseHelper = new DatabaseHelper();}
 
         public IEnumerable<Student> GetAll()
         {

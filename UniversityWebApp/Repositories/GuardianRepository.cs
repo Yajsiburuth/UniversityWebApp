@@ -10,11 +10,8 @@ namespace UniversityWebApp.Repositories
 {
     public class GuardianRepository : IRepository<Guardian>
     {
-        private readonly DatabaseHelper _databaseHelper = new DatabaseHelper();
-        public GuardianRepository()
-        {
-
-        }
+        private readonly DatabaseHelper _databaseHelper;
+        public GuardianRepository(){ _databaseHelper = new DatabaseHelper(); }
 
         public int Create(Guardian guardian)
         {

@@ -61,12 +61,29 @@ namespace UniversityWebApp.Controllers
             }
             var loggedUser = Session["CurrentUser"] as User;
             var view = View(loggedUser);
-            view.MasterName = "~/Views/Shared/_Layout.cshtml";
-            if (loggedUser != null && loggedUser.Role == Role.Admin)
-                view.MasterName = "~/Views/Shared/_AdminLayout.cshtml";
 
             return view;
 
+        }
+
+        [Authorize]
+        public ActionResult Admin()
+        {
+            if (Request.IsAuthenticated)
+            {
+
+            }
+            var loggedUser = Session["CurrentUser"] as User;
+            var view = View(loggedUser);
+            view.MasterName = "~/Views/Shared/_Layout.cshtml";
+            return view;
+
+        }
+
+        public JsonResult GetStudentsSummary()
+        {
+
+            return Json(new { });
         }
     }
 }

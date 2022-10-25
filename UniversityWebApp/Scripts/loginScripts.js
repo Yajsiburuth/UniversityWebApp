@@ -56,7 +56,7 @@ function signIn() {
         });
 }
 
-function sendData(userCredential, url) {
+/*function sendData(userCredential, url) {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: "POST",
@@ -70,5 +70,23 @@ function sendData(userCredential, url) {
                 reject(error)
             }
         })
+    });
+}*/
+
+function sendData(userCredential, url) {
+    return new Promise((resolve, reject) => {
+        let request = new XMLHttpRequest();
+        request.open("POST", url, true);
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        request.send(JSON.stringify(userCredential));
+        request.onload = function () {
+            if (this.status >= 200 && this.status < 400) {
+                let data = this.response;
+                resolve(data)
+            }
+        }
+        request.onerror = function (error) {
+            reject(error)
+        };
     });
 }

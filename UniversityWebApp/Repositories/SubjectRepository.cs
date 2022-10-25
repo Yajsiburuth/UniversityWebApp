@@ -10,7 +10,9 @@ namespace UniversityWebApp.Repositories
 {
     public class SubjectRepository : IRepository<Subject>
     {
-        private readonly DatabaseHelper databaseHelper = new DatabaseHelper();
+        private readonly DatabaseHelper _databaseHelper;
+
+        public SubjectRepository(){ _databaseHelper = new DatabaseHelper();}
 
         public int Create(Subject entity)
         {
@@ -25,7 +27,7 @@ namespace UniversityWebApp.Repositories
         public IEnumerable<Subject> GetAll()
         {
             List<Subject> subjects = new List<Subject>();
-            using (SqlConnection _conn = databaseHelper.CreateConnection())
+            using (SqlConnection _conn = _databaseHelper.CreateConnection())
             {
                 _conn.Open();
                 SqlCommand command = new SqlCommand("SELECT * FROM subject", _conn);

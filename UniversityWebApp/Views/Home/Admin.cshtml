@@ -1,0 +1,32 @@
+﻿<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Admin</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script type="text/javascript" src="~/Scripts/adminScripts.js"></script>
+</head>
+<body onload="loading()">
+    <h3 id="usernameDisplay">You are signed in with: </h3>
+    <button onclick="DisplaySummary()">Display Summary of Registered Students</button>
+    <button onclick="logout()">Logout</button>
+</body>
+
+@*<p>You are signed in with: </p><h3></h3>
+    You are signed with: @HttpContext.Current.User.Identity.Name
+
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("RegisterStudent", "Home", FormMethod.Get, new { id = "studentRegistrationForm" }))
+        {
+            <a href="javascript:document.getElementById('studentRegistrationForm').submit()">Student Registration</a>
+        }
+        using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+        }
+
+    }*@
+</html>
+

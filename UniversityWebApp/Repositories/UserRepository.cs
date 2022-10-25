@@ -10,9 +10,9 @@ namespace UniversityWebApp.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly DatabaseHelper _databaseHelper = new DatabaseHelper();
+        private readonly DatabaseHelper _databaseHelper;
 
-        public UserRepository() { }
+        public UserRepository() { _databaseHelper = new DatabaseHelper(); }
 
         public IEnumerable<User> GetAll()
         {
