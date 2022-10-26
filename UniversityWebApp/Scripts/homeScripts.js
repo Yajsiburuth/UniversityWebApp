@@ -1,7 +1,7 @@
 ﻿function loadEmail() {
     loadData("/User/GetUser").then((response) => {
         if (response.user != null) {
-            toastr.success("Logged In");
+            //toastr.success("Logged In");
             var header = document.getElementById("emailDisplay");
             var existingText = header.innerText;
             var userEmail = response['user']['Email'];

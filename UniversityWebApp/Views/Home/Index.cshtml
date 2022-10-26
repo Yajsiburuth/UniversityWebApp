@@ -6,30 +6,17 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Css/home.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="~/Scripts/homeScripts.js"></script>
 </head>
     <body onload="loadEmail()">
-        <h3 id="emailDisplay">You are signed in with: </h3>
-        <button onclick="redirectToStudentRegistration()">Student Registration</button>
-        <button onclick="logout()">Logout</button>
+        <div id="menu">
+            <h3 id="emailDisplay">You are signed in with: </h3>
+            <button onclick="redirectToStudentRegistration()">Student Registration</button>
+            <button onclick="logout()">Logout</button>
+        </div>
     </body>
-
-@*<p>You are signed in with: </p><h3></h3>
-You are signed with: @HttpContext.Current.User.Identity.Name
-
-@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("RegisterStudent", "Home", FormMethod.Get, new { id = "studentRegistrationForm" }))
-    {
-        <a href="javascript:document.getElementById('studentRegistrationForm').submit()">Student Registration</a>
-    }
-    using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
-    {
-        <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
-    }
-
-}*@
 </html>
 

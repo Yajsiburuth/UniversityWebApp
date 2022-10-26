@@ -1,12 +1,11 @@
-﻿using System;
+﻿using BL.Services;
+using DAL.Models;
+using DAL.Repositories;
+using DAL.ViewModels;
+using System;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Web.UI.WebControls;
-using UniversityWebApp.Models;
-using UniversityWebApp.Repositories;
-using UniversityWebApp.Services;
-using UniversityWebApp.ViewModels;
 
 namespace UniversityWebApp.Controllers
 {

@@ -10,15 +10,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 })
 
+function loadData(url) {
+    return fetch(url)
+               .then(response => { return response.json(); })
+               .catch((error) => console.log(error))
+}
+
+function sendData(dataObj, url) {
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataObj)
+    })
+        .then(response => { return response.json(); })
+        .catch((error) => console.log(error))
+}
+
 function addResultRow() {
     counter++;
     if (counter < 3) {
         var table = document.getElementById("AddItemsTable");
         var row = table.insertRow(-1);
 
-        row.innerHTML = '<th><label for="dropdownSubjects" class="control-label col-md-2">Subject</label></th>' +
+        row.innerHTML =
             '<th><select required onchange="checkValue()" id="dropdownSubjects' + counter + '" name="dropdownSubjects' + counter + '" class="form-control"></select></th>' +
-            '<th><label for="Grade[' + counter + '].Result" class="control-label col-md-2">Result</label></th>' +
             '<th><select required id="Grade[' + counter + '].Result" "name="Grade[' + counter + '].Result" class="form-control">' +
             '<option value="">-</option>' +
             '<option value="A">A</option>' + 
@@ -88,16 +105,11 @@ function checkValue() {
 }
 
 
-function loadData(url) {
-    return fetch(url)
-               .then(response => { return response.json(); })
-               .catch((error) => console.log(error))
-}
 
 function loadDropdown() {
     loadData("/Home/GetSubjects").then((response) => {
         if (response.result) {
-            toastr.success("Loaded");
+            //toastr.success("Loaded");
             subjectList = response.subjectList;
             var dropdown = document.getElementById("dropdownSubjects0");
             addSubjectsToDropdown(dropdown);
@@ -194,16 +206,4 @@ function createStudent() {
             console.log(error);
         });
 
-}
-
-function sendData(dataObj, url) {
-    return fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataObj)
-    })
-        .then(response => { return response.json(); })
-        .catch((error) => console.log(error))
 }

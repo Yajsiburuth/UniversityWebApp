@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
-using UniversityWebApp.Models;
-using UniversityWebApp.Repositories;
-using UniversityWebApp.Services;
+using DAL.Models;
+using DAL.Repositories;
+using BL.Services;
 
 namespace UniversityWebApp.Controllers
 {

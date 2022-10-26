@@ -10,6 +10,10 @@ function createAccount() {
     window.location.href = "/User/Register/";
 }
 
+function goToLoginPage() {
+    window.location.href = "/User/Login";
+}
+
 function register() {
     var email = document.querySelector("#email").value;
     var password = document.querySelector("#password").value;
