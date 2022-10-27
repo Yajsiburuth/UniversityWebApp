@@ -1,124 +1,157 @@
-﻿* {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+*, html, body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
+    
 }
 
 body {
-    /*background: #e35869;*/
-    font-family: 'Rubik', sans-serif;
-}
-
-.login-form {
-    background: #fff;
-    width: 500px;
-    margin: 65px auto;
-    display: -webkit-box;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    flex-direction: column;
-    border-radius: 4px;
-    box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    align-items: center;
+    background: white;
+    background-image: url("DFLogo.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.dfMobileImage{
+    display: none;
+    width: 100%;
+    height: 30%;
 }
 
-    .login-form h1 {
-        padding: 35px 35px 0 35px;
-        font-weight: 300;
+.dfImageContainer{
+    top: -85px;
+    left: -130px;
+    width: 685px;
+    position: absolute;
+    overflow: hidden;
+    z-index: 1;
+}
+.container {
+    width: 80vw;
+    height: 80vh;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-areas: "login";
+    box-shadow: 0 0 17px 10px rgb(0 0 0 / 30%);
+    border-radius: 20px;
+    background: white;
+    overflow: hidden;
+}
+
+.design {
+    grid-area: design;
+    display: none;
+    position: relative;
+}
+
+.login {
+    grid-area: login;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: white;
+}
+
+.login h3.title {
+    margin: 35px 0;
+    font-size: 42px;
+}
+
+.text-input {
+    background: #e6e6e6;
+    height: 60px;
+    display: flex;
+    width: 60%;
+    align-items: center;
+    border-radius: 10px;
+    padding: 0 15px;
+    margin:10px 0;
+}
+
+.text-input input {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    margin-left: 10px;
+}
+
+.text-input i {
+    color: #686868;
+}
+
+::placeholder {
+    color: #9a9a9a;
+}
+
+.login-btn {
+    width: 68%;
+    height: 7%;
+    padding: 10px;
+    color: white;
+    background: linear-gradient(to right, #6991e5, #3067db, #6991e5);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 30px;
+    font-size: 24px;
+}
+
+a {
+    font-size: 18px;
+    color: #9a9a9a;
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+}
+
+.create {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 50px;
+}
+
+.create i {
+    color: #9a9a9a;
+    margin-left: 10px;
+}
+
+@media (min-width: 1100px) {
+    .container {
+        grid-template-columns: 60% 40%;
+        grid-template-areas: "design login";
     }
 
-    .login-form .content {
-        padding: 35px;
-        text-align: center;
+    .design {
+        display: block;
+    }
+}
+@media (min-width: 1100px) {
+    .container {
+        grid-template-columns: 60% 40%;
+        grid-template-areas: "design login";
     }
 
-    .login-form .input-field {
-        padding: 12px 5px;
+    .design {
+        display: block;
     }
-
-        .login-form .input-field input {
-            font-size: 16px;
-            display: block;
-            font-family: 'Rubik', sans-serif;
-            width: 100%;
-            padding: 10px 1px;
-            border: 0;
-            border-bottom: 1px solid #747474;
-            outline: none;
-            -webkit-transition: all .2s;
-            transition: all .2s;
-        }
-
-            .login-form .input-field input::-webkit-input-placeholder {
-                text-transform: uppercase;
-            }
-
-            .login-form .input-field input::-moz-placeholder {
-                text-transform: uppercase;
-            }
-
-            .login-form .input-field input:-ms-input-placeholder {
-                text-transform: uppercase;
-            }
-
-            .login-form .input-field input::-ms-input-placeholder {
-                text-transform: uppercase;
-            }
-
-            .login-form .input-field input::placeholder {
-                text-transform: uppercase;
-            }
-
-            .login-form .input-field input:focus {
-                border-color: #222;
-            }
-
-    .login-form a.link {
-        text-decoration: none;
-        color: #747474;
-        letter-spacing: 0.2px;
-        text-transform: uppercase;
-        display: inline-block;
-        margin-top: 20px;
+}
+@media (max-width: 750px) {
+    body{
+        background-image: none;
     }
-
-    .login-form .action {
-        display: -webkit-box;
-        display: flex;
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
-        flex-direction: row;
+    .dfMobileImage{
+        display: block;
+        width: 50%;
+        margin-top: -150px;
     }
-
-        .login-form .action button {
-            width: 100%;
-            border: none;
-            padding: 18px;
-            font-family: 'Rubik', sans-serif;
-            cursor: pointer;
-            text-transform: uppercase;
-            background: #e8e9ec;
-            color: #777;
-            border-bottom-left-radius: 4px;
-            border-bottom-right-radius: 0;
-            letter-spacing: 0.2px;
-            outline: 0;
-            -webkit-transition: all .3s;
-            transition: all .3s;
-        }
-
-            .login-form .action button:hover {
-                background: #d8d8d8;
-            }
-
-            .login-form .action button:nth-child(2) {
-                background: #2d3b55;
-                color: #fff;
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 4px;
-            }
-
-                .login-form .action button:nth-child(2):hover {
-                    background: #3c4d6d;
-                }
+}

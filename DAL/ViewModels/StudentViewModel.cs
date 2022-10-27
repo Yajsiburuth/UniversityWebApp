@@ -25,6 +25,7 @@ namespace DAL.ViewModels
         [Display(Name = "Date of birth")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Date of birth must be set")]
         [DataType(DataType.Date)]
+        [Range(typeof(DateTime), "1/1/1900", "1/1/2006")]
         public DateTime DoB { get; set; }
 
         [Display(Name = "National Id card number")]
@@ -40,6 +41,7 @@ namespace DAL.ViewModels
         [Display(Name = "SubjectIdList")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Must select subject")]
         [DataType(DataType.Custom)]
+        [MinLength(1), MaxLength(3)]
         public List<int> SubjectIdList { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Must set result")]

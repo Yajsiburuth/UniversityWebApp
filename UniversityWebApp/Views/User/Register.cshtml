@@ -17,8 +17,8 @@
         <h2>Registration</h2>
         <form id="formRegistration">
             <p><input type="email" id="email" name="email" class="form-control" placeholder="Email" /></p>
-            <p><input type="password" id="password" name="password" class="form-control" placeholder="Password" /></p>
-            <p><input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" /></p>
+            <p><input type="password" id="password" name="password" class="form-control" placeholder="Password" minlength="6" /></p>
+            <p><input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" minlength="6"/></p>
             <p><input type="submit" id="createAccount" onclick="register()" /></p>
         </form>
         <div id="login-wrap">
