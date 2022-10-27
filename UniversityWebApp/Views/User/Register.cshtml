@@ -6,24 +6,40 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    <link rel="stylesheet" href="~/Css/registration.css" />
+    <link rel="stylesheet" href="~/Content/css/login-registration.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/ServerCallHelper/ServerCall.js"></script>
     <script type="text/javascript" src="~/Scripts/loginScripts.js"></script>
 
 </head>
 <body>
-    <div id="registration-form-wrap">
-        <h2>Registration</h2>
-        <form id="formRegistration">
-            <p><input type="email" id="email" name="email" class="form-control" placeholder="Email" /></p>
-            <p><input type="password" id="password" name="password" class="form-control" placeholder="Password" minlength="6" /></p>
-            <p><input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Confirm Password" minlength="6"/></p>
-            <p><input type="submit" id="createAccount" onclick="register()" /></p>
-        </form>
-        <div id="login-wrap">
-            <p>Already have an account? <a href="#" id="login" onclick="goToLoginPage()">Login</a></p>
+    <div class="container">
+        <div class="design">
+            <img class="dfImageContainer" src="~/Content/images/DFLogo.svg" alt="">
         </div>
+        <form class="login-registration" onsubmit="register()">
+            <img class="dfMobileImage" src="ceridianlogo.svg">
+            <h3 class="title">User Registration</h3>
+            <div class="text-input">
+                <i class="ri-user-fill"></i>
+                <input required type="email" id="email" placeholder="Email">
+            </div>
+            <div class="text-input">
+                <i class="ri-lock-fill"></i>
+                <input required type="password" id="password" name="password" placeholder="Password" minlength="6">
+            </div>
+            <div class="text-input">
+                <i class="ri-lock-fill"></i>
+                <input required type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" minlength="6">
+            </div>
+            <button class="login-registration-btn">REGISTER</button>
+            <div class="create">
+                <a href="#" id="login" onclick="goToLoginPage()">Login To Your Account</a>
+                <i class="ri-arrow-right-fill"></i>
+            </div>
+        </form>
     </div>
 </body>
 

@@ -2,6 +2,8 @@
 using DAL.Repositories;
 using DAL.ViewModels;
 using Helpers.Helper;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace BL.Services
 {
@@ -9,16 +11,12 @@ namespace BL.Services
     {
         private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository user)
-        {
-            _userRepository = user;
-        }
+        public UserService(IUserRepository user) => _userRepository = user;
 
         public User Register(string email, string password)
         {
-            HashingHelper hashingHelper = new HashingHelper();
-            byte[] salt = hashingHelper.CreateSalt();
-            byte[] passwordHash = hashingHelper.HashPassword(password, salt);
+            byte[] salt = HashingHelper.CreateSalt();
+            byte[] passwordHash = HashingHelper.HashPassword(password, salt);
             User user = new User { Email = email, PasswordHash = passwordHash, Salt = salt, Role = Role.User};
             _userRepository.Create(user);
             return user;
@@ -29,8 +27,7 @@ namespace BL.Services
             User user = GetUser(loginVm.Email);
             if (user != null)
             {
-                HashingHelper hashingHelper = new HashingHelper();
-                if (!hashingHelper.VerifyHash(loginVm.Password, user.Salt, user.PasswordHash))
+                if (!HashingHelper.VerifyHash(loginVm.Password, user.Salt, user.PasswordHash))
                     return null;
             }
             return user;

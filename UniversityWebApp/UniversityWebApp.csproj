@@ -156,7 +156,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\css\login.css" />
+    <Content Include="Content\css\form.css" />
+    <Content Include="Content\css\login-registration.css" />
     <Content Include="Css\home.css" />
     <Content Include="Css\studentRegistration.css" />
     <Content Include="Css\registration.css" />
@@ -169,7 +170,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\adminScripts.js" />
-    <Content Include="Scripts\ServerCallHelper\helper.js" />
+    <Content Include="Scripts\ServerCallHelper\ServerCall.js" />
     <Content Include="Scripts\studentScripts.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -199,8 +200,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\Home\RegisterStudent.cshtml" />
+    <Content Include="Views\Home\RegisterStudentbak.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
+    <Content Include="Views\Home\RegisterStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -228,6 +230,10 @@
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{4a6dba32-11d2-44ba-96f1-5b272118f637}</Project>
       <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helpers\Helpers.csproj">
+      <Project>{022303a0-1819-4197-b764-7b4a1c215997}</Project>
+      <Name>Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

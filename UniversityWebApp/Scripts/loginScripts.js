@@ -23,8 +23,8 @@ function register() {
         return false;
     }
     var regObj = { Email: email, Password: password };
-
-    sendData(regObj, "/User/Register").then(response => {
+    var serverCall = new ServerCall({ url: "/User/Register", parameters: regObj, callMethod: "POST" })
+    serverCall.fetchApiCall().then(response => {
         if (response.result) {
             toastr.success("Successful Registration. Redirecting to Login Page");
             window.location = response.url;
@@ -39,7 +39,8 @@ function signIn() {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     var authObj = { Email: email, Password: password };
-    sendData(authObj, "/User/Login").then((response) => {
+    var serverCall = new ServerCall({ url: "/User/Login", parameters: authObj, callMethod: "POST" })
+    serverCall.fetchApiCall().then((response) => {
         if (response.result) {
             toastr.success("Authentication Successful");
             window.location = response.url;
@@ -47,17 +48,5 @@ function signIn() {
             toastr.error("Unable to Authenticate");
             return false;
         }
-    });
-}
-
-function sendData(dataObj, url) {
-    return fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataObj)
-        })
-        .then(response => { return response.json(); })
-        .catch((error) => console.log(error))
+    })
 }

@@ -1,25 +1,13 @@
-﻿/*function loading() {
-    loadData("/User/GetUser").then((response) => {
-        if (response.result) {
-            toastr.success("Logged In");
-        } else {
-            toastr.error("Unable to load");
-        }
-    })
-        .catch((error) => {
-            toastr.error('Unable to make request!');
-        });
-}*/
-
-
+﻿
 function DisplaySummaryTable() {
     
 }
 
 function loadEmail() {
-    loadData("/User/GetUser").then((response) => {
+    var serverCall = new ServerCall({ url: "/User/GetUser", callMethod: "GET" });
+    serverCall.fetchApiCall().then(response => {
         if (response.user != null) {
-            toastr.success("Logged In");
+            //toastr.success("Logged In");
             var header = document.getElementById("emailDisplay");
             var existingText = header.innerText;
             var userEmail = response['user']['Email'];
@@ -29,16 +17,8 @@ function loadEmail() {
             toastr.error("Unable to load");
         }
     })
-        .catch((error) => {
-            toastr.error('Unable to make request!');
-        });
 }
 
-function loadData(url) {
-    return fetch(url)
-        .then(response => { return response.json(); })
-        .catch((error) => console.log(error))
-}
 function logout() {
     window.location.href = "/User/Login";
 }

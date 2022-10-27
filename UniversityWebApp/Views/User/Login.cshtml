@@ -6,29 +6,36 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    <link rel="stylesheet" href="~/Css/login.css"/>
+    <link rel="stylesheet" href="~/Content/css/login-registration.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/ServerCallHelper/ServerCall.js"></script>
     <script type="text/javascript" src="~/Scripts/loginScripts.js"></script>
 
 </head>
 <body>
-    <div id="login-form-wrap">
-        <h2>Login</h2>
-        <form onsubmit="signIn()" id="formLogin">
-            <div class="form-group">
-                <p><input required type="email" id="email" name="email" class="form-control" placeholder="Email" /></p>
+    <div class="container">
+        <div class="design">
+            <img class="dfImageContainer" src="~/Content/images/DFLogo.svg" alt="">
+        </div>
+        <form class="login-registration" onsubmit="signIn()">
+            <img class="dfMobileImage" src="ceridianlogo.svg">
+            <h3 class="title">User Login</h3>
+            <div class="text-input">
+                <i class="ri-user-fill"></i>
+                <input required type="email" id="email" placeholder="Email">
             </div>
-            <div class="form-group">
-                <p><input required type="password" id="password" name="password" class="form-control" placeholder="Password" minlength="6"/></p>
+            <div class="text-input">
+                <i class="ri-lock-fill"></i>
+                <input required type="password" id="password" name="password" placeholder="Password">
             </div>
-            <div class="form-group">
-                <p><input type="submit" id="login"/></p>
+            <button class="login-registration-btn">LOGIN</button>
+            <div class="create">
+                <a href="#" id="register" onclick="createAccount()">Create Your Account</a>
+                <i class="ri-arrow-right-fill"></i>
             </div>
         </form>
-            <div id="create-account-wrap">
-                <p>Do not have an account? <a href="#" id="register" onclick="createAccount()">Create an account</a></p>
-            </div>
     </div>
 </body>
 

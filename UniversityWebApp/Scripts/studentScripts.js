@@ -10,24 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 })
 
-function loadData(url) {
-    return fetch(url)
-               .then(response => { return response.json(); })
-               .catch((error) => console.log(error))
-}
-
-function sendData(dataObj, url) {
-    return fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataObj)
-    })
-        .then(response => { return response.json(); })
-        .catch((error) => console.log(error))
-}
-
 function addResultRow() {
     counter++;
     if (counter < 3) {
@@ -38,25 +20,26 @@ function addResultRow() {
             '<th><select required onchange="checkValue()" id="dropdownSubjects' + counter + '" name="dropdownSubjects' + counter + '" class="form-control"></select></th>' +
             '<th><select required id="Grade[' + counter + '].Result" "name="Grade[' + counter + '].Result" class="form-control">' +
             '<option value="">-</option>' +
-            '<option value="A">A</option>' + 
-            '<option value= "B">B</option>' +
-            '<option value="C">C</option>' +
-            '<option value="D">D</option>' +
-            '<option value="E">E</option>' +
-            '<option value="F">F</option>' +
+            '<option value="A">A - 10 Points</option>' + 
+            '<option value= "B">B - 8 Points</option>' +
+            '<option value="C">C - 6 Points</option>' +
+            '<option value="D">D - 4 Points</option>' +
+            '<option value="E">E - 2 Points</option>' +
+            '<option value="F">F - 0 Points</option>' +
             '</select></th>' +
             '<th><button class="fa fa-close" style="color:red; border:0;background-color: transparent;font-size: large;" onclick="removeResultRow()" id="removeButton' + counter + '" /></th>';
 
         var dropdown = document.getElementById("dropdownSubjects" + counter);
         addSubjectsToDropdown(dropdown);
-        document.querySelector('#removeButton' + (counter - 1)).hide();
+        $('#removeButton' + (counter - 1)).hide();
         if (counter > 1) {
-            document.getElementById('addButton').style.display = 'none';
+            $('#addButton').hide();
         }
     }
 }
 
 function removeResultRow() {
+    counter--;
     var td = event.target.parentNode;
     var tr = td.parentNode;
     tr.parentNode.removeChild(tr);
@@ -65,12 +48,11 @@ function removeResultRow() {
             dictSubjectList.splice(i, 1);
         }
     }
-    counter--;
     if (counter > 0) {
-        document.querySelector('#removeButton' + counter).show();
+        $('#removeButton' + counter).show();
     }
     if (counter < 3) {
-        document.getElementById('addButton').style.display = 'block';
+        $('#addButton').show();
     }
 
 }
@@ -104,10 +86,9 @@ function checkValue() {
     console.table(dictSubjectList);
 }
 
-
-
 function loadDropdown() {
-    loadData("/Home/GetSubjects").then((response) => {
+    var serverCall = new ServerCall({ url: "/Home/GetSubjects", callMethod: "GET" });
+    serverCall.fetchApiCall().then(response => {
         if (response.result) {
             //toastr.success("Loaded");
             subjectList = response.subjectList;
@@ -118,9 +99,6 @@ function loadDropdown() {
             toastr.error("Unable to load");
         }
     })
-        .catch((error) => {
-            toastr.error('Unable to make request!');
-        });
 }
 
 function addSubjectsToDropdown(dropdown) {
@@ -144,14 +122,11 @@ function createStudent() {
     var phoneNumber = document.querySelector('#PhoneNumber').value;
     var dateOfBirth = document.querySelector('#DoB').value;
     var nationalId = document.querySelector('#Nid').value;
-    var guardianId;
+    var guardianName = document.querySelector('#GuardianName').value;
     var studentId;
-    var guardianFirstName = document.querySelector('#guardianFirstName').value;
-    var guardianLastName = document.querySelector('#guardianLastName').value;
-    var guardianPhoneNumber = document.querySelector('#guardianPhoneNumber').value;
     var selectedSubjectList = [];
     var selectedSubjectResultList = [];
-    console.log(firstName, lastName, phoneNumber, dateOfBirth, nationalId, guardianFirstName, guardianLastName, guardianPhoneNumber);
+    console.log(firstName, lastName, phoneNumber, dateOfBirth, nationalId, guardianName);
 
     for (var i = 0; i < dictSubjectList.length; i++) {
         var dropdownId = dictSubjectList[i].dropdownId;
@@ -162,48 +137,28 @@ function createStudent() {
     }
     console.table(selectedSubjectList);
     console.table(selectedSubjectResultList);
-    guardianDataObj = { FirstName: guardianFirstName, LastName: guardianLastName, PhoneNumber: guardianPhoneNumber };
 
-    sendData(guardianDataObj, "/Home/CreateGuardian").then((response) => {
+    studentDataObj = { FirstName: firstName, LastName: lastName, PhoneNumber: phoneNumber, DoB: dateOfBirth, Nid: nationalId, GuardianName: guardianName }
+    var studentServerCall = new ServerCall({ url: "/Home/CreateStudent", parameters: studentDataObj, callMethod: "POST" });
+    studentServerCall.fetchApiCall().then(response => {
         if (response.result) {
-            guardianId = response.guardianId;
-            console.log(guardianId);
-            studentDataObj = { FirstName: firstName, LastName: lastName, PhoneNumber: phoneNumber, DoB: dateOfBirth, Nid: nationalId, GuardianId: guardianId }
-            sendData(studentDataObj, "/Home/CreateStudent").then((response) => {
+            studentId = response.studentId;
+            console.log(studentId);
+            gradeDataObj = { StudentId: studentId, subjectId: selectedSubjectList, result: selectedSubjectResultList };
+            console.table(gradeDataObj);
+            var gradeServerCall = new ServerCall({ url: "/Home/AddResults", parameters: gradeDataObj, callMethod: "POST" });
+            gradeServerCall.fetchApiCall().then(response => {
                 if (response.result) {
-                    studentId = response.studentId;
-                    console.log(studentId);
-                    gradeDataObj = { StudentId: studentId, subjectId: selectedSubjectList, result: selectedSubjectResultList };
-                    console.table(gradeDataObj);
-                    sendData(gradeDataObj, "/Home/AddResults").then((response) => {
-                        if (response.result) {
-                            toastr.success("Registered sucessfully!");
-                            window.location = "/Home/Index"
-                        } else {
-                            toastr.error("Unable to add results");
-                            return false;
-                        }
-                    })
-                        .catch((error) => {
-                            console.log(error);
-                        });
-
+                    toastr.success("Registered sucessfully!");
+                    window.location = "/Home/Index"
                 } else {
-                    toastr.error('Unable to create new Student');
+                    toastr.error("Unable to add results");
                     return false;
                 }
             })
-                .catch((error) => {
-                    console.log(error);
-                });
-
         } else {
-            toastr.error('Unable to create new Guardian');
+            toastr.error('Unable to create new Student');
             return false;
         }
     })
-        .catch((error) => {
-            console.log(error);
-        });
-
 }

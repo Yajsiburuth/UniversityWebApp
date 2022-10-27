@@ -6,11 +6,8 @@ using System.Data.SqlClient;
 
 namespace DAL.Repositories
 {
-    public class SubjectRepository : IRepository<Subject>
+    public class SubjectRepository : DatabaseHelper, IRepository<Subject>
     {
-        private readonly DatabaseHelper _databaseHelper;
-
-        public SubjectRepository(){ _databaseHelper = new DatabaseHelper();}
 
         public int Create(Subject entity)
         {
@@ -25,22 +22,19 @@ namespace DAL.Repositories
         public IEnumerable<Subject> GetAll()
         {
             List<Subject> subjects = new List<Subject>();
-            using (SqlConnection _conn = _databaseHelper.CreateConnection())
+            SqlCommand command = new SqlCommand("SELECT * FROM subject", conn);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                _conn.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM subject", _conn);
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                var subject = new Subject()
                 {
-                    var subject = new Subject()
-                    {
-                        SubjectId = reader.GetInt32(0),
-                        SubjectName = reader.GetString(1)
-                    };
-                    subjects.Add(subject);
-                }
-                _conn.Close();
+                    SubjectId = reader.GetInt32(0),
+                    SubjectName = reader.GetString(1)
+                };
+                subjects.Add(subject);
             }
+            reader.Close();
+            command.Dispose();
             return subjects;
         }
 

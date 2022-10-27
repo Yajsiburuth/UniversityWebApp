@@ -6,119 +6,94 @@ using System.Linq;
 
 namespace DAL.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : DatabaseHelper, IUserRepository
     {
-        private readonly DatabaseHelper _databaseHelper;
-
-        public UserRepository() { _databaseHelper = new DatabaseHelper(); }
-
         public IEnumerable<User> GetAll()
         {
-            List<User> users = new List<User>();
-            using (SqlConnection _conn = _databaseHelper.CreateConnection())
+            IEnumerable<User> users = new List<User>();
+            SqlCommand command = new SqlCommand("SELECT * FROM user", conn);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                _conn.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM user", _conn);
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                users.Append(new User()
                 {
-                    User user = new User();
-                    user.UserId = reader.GetInt32(0);
-                    user.Email = reader.GetString(1);
-                    user.PasswordHash = (byte[])reader.GetValue(2);
-                    user.Salt = (byte[])reader.GetValue(3);
-                    user.Role = (Role) reader.GetInt32(4);
-                    users.Append(user);
-                }
-                _conn.Close();
+                    UserId = reader.GetInt32(0),
+                    Email = reader.GetString(1),
+                    PasswordHash = (byte[])reader.GetValue(2),
+                    Salt = (byte[])reader.GetValue(3),
+                    Role = (Role)reader.GetInt32(4)
+                });
             }
+            reader.Close();
+            command.Dispose();
             return users;
         }
 
         public User Find(int id)
         {
-            User user = new User();
-            using (SqlConnection _conn = _databaseHelper.CreateConnection())
+            User user = null;
+            SqlCommand command = new SqlCommand("SELECT * FROM [user] WHERE id=@Id", conn);
+            command.Parameters.AddWithValue("@Id", id);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                _conn.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM [user] WHERE id=@Id", _conn);
-                command.Parameters.AddWithValue("@Id", id);
-                SqlDataReader reader = command.ExecuteReader();
-                if (!reader.HasRows)
+                user = new User()
                 {
-                    return null;
-                }
-                while (reader.Read())
-                {
-                    user.UserId = reader.GetInt32(0);
-                    user.Email = reader.GetString(1);
-                    user.PasswordHash = (byte[])reader.GetValue(2);
-                    user.Salt = (byte[])reader.GetValue(3);
-                    user.Role = (Role)reader.GetByte(4);
-                }
-                _conn.Close();
+                    UserId = reader.GetInt32(0),
+                    Email = reader.GetString(1),
+                    PasswordHash = (byte[])reader.GetValue(2),
+                    Salt = (byte[])reader.GetValue(3),
+                    Role = (Role)reader.GetByte(4),
+                };
             }
+            reader.Close();
+            command.Dispose();
             return user;
-
         }
 
         public User Find(string email)
         {
-            User user = new User();
-            using (SqlConnection _conn = _databaseHelper.CreateConnection())
+            User user = null;
+            SqlCommand command = new SqlCommand("SELECT * FROM [user] WHERE email=@Email", conn);
+            command.Parameters.AddWithValue("@Email", email);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                _conn.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM [user] WHERE email=@Email", _conn);
-                command.Parameters.AddWithValue("@Email", email);
-                SqlDataReader reader = command.ExecuteReader();
-                if (!reader.HasRows)
+                user = new User()
                 {
-                    return null;
-                }
-                    while (reader.Read())
-                    {
-                        user.UserId = reader.GetInt32(0);
-                        user.Email = reader.GetString(1);
-                        user.PasswordHash = (byte[]) reader.GetValue(2);
-                        user.Salt = (byte[]) reader.GetValue(3);
-                        user.Role =  (Role)reader.GetByte(4);
-                    }
-                _conn.Close();
-                }
+                    UserId = reader.GetInt32(0),
+                    Email = reader.GetString(1),
+                    PasswordHash = (byte[])reader.GetValue(2),
+                    Salt = (byte[])reader.GetValue(3),
+                    Role = (Role)reader.GetByte(4),
+                };
+            }
+            reader.Close();
+            command.Dispose();
             return user;
         }
 
         public int Create(User user)
         {
-            int rows = 0;
-            using (SqlConnection _conn = _databaseHelper.CreateConnection())
-            {
-                _conn.Open();
-                SqlCommand command = new SqlCommand("INSERT INTO [user] (email, password, salt, role) VALUES (@Email, @Password, @Salt, @Role)",_conn);
-                command.Parameters.AddWithValue("@Email", user.Email);
-                command.Parameters.AddWithValue("@Password", user.PasswordHash);
-                command.Parameters.AddWithValue("@Salt", user.Salt);
-                command.Parameters.AddWithValue("@Role", (int)user.Role);
-                rows = command.ExecuteNonQuery();
-                _conn.Close();
-            }
+            SqlCommand command = new SqlCommand("INSERT INTO [user] (email, password, salt, role) VALUES (@Email, @Password, @Salt, @Role)", conn);
+            command.Parameters.AddWithValue("@Email", user.Email);
+            command.Parameters.AddWithValue("@Password", user.PasswordHash);
+            command.Parameters.AddWithValue("@Salt", user.Salt);
+            command.Parameters.AddWithValue("@Role", (int)user.Role);
+            int rows = command.ExecuteNonQuery();
+            command.Dispose();
             return rows;
-
         }
 
         public void Update(User user)
         {
-            using (SqlConnection _conn = _databaseHelper.CreateConnection())
-            {
-                _conn.Open();
-                SqlCommand command = new SqlCommand("UPDATE user SET email = @Email, password = @Password, role = @Role WHERE id = @id");
-                command.Parameters.AddWithValue("@Email", user.Email);
-                command.Parameters.AddWithValue("@Password", user.PasswordHash);
-                command.Parameters.AddWithValue("@Salt", user.Salt);
-                command.Parameters.AddWithValue("@Role", (int)user.Role);
-                int rows = command.ExecuteNonQuery();
-                _conn.Close();
-            }
+            SqlCommand command = new SqlCommand("UPDATE user SET email = @Email, password = @Password, role = @Role WHERE id = @id");
+            command.Parameters.AddWithValue("@Email", user.Email);
+            command.Parameters.AddWithValue("@Password", user.PasswordHash);
+            command.Parameters.AddWithValue("@Salt", user.Salt);
+            command.Parameters.AddWithValue("@Role", (int)user.Role);
+            command.ExecuteNonQuery();
+            command.Dispose();
         }
     }
 }

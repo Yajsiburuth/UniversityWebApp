@@ -9,7 +9,6 @@ namespace UniversityWebApp.Controllers
     {
         private readonly SubjectService _subjectService = new SubjectService(new SubjectRepository());
         private readonly StudentService _studentService = new StudentService(new StudentRepository());
-        private readonly GuardianService _guardianService = new GuardianService(new GuardianRepository());
         private readonly GradeService _gradeService = new GradeService(new GradeRepository());
 
         [Authorize]
@@ -39,13 +38,6 @@ namespace UniversityWebApp.Controllers
         {
             var subjectList = _subjectService.GetSubjects();
             return Json(new { result = true, subjectList }, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public JsonResult CreateGuardian(Guardian guardian)
-        {
-            int guardianId = _guardianService.CreateGuardian(guardian);
-            return Json(new {result = guardianId > 0 ? true : false, guardianId });
         }
 
         [Authorize]

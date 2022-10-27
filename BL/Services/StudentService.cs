@@ -9,10 +9,7 @@ namespace BL.Services
 
         private readonly IRepository<Student> _studentRepository;
 
-        public StudentService(IRepository<Student> studentRepository)
-        {
-            _studentRepository = studentRepository;
-        }
+        public StudentService(IRepository<Student> studentRepository) => _studentRepository = studentRepository;
 
         public int RegisterStudent(Student student)
         {

@@ -6,16 +6,16 @@ using System.Text;
 
 namespace Helpers.Helper
 {
-    public class HashingHelper
+    public static class HashingHelper
     {
-        public byte[] CreateSalt()
+        public static byte[] CreateSalt()
         {
             var buffer = new byte[16];
             var rng = new RNGCryptoServiceProvider();
             rng.GetBytes(buffer);
             return buffer;
         }
-        public byte[] HashPassword(string password, byte[] salt)
+        public static byte[] HashPassword(string password, byte[] salt)
         {
             var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
 
@@ -27,7 +27,7 @@ namespace Helpers.Helper
             return argon2.GetBytes(16);
         }
 
-        public bool VerifyHash(string password, byte[] salt, byte[] hash)
+        public static bool VerifyHash(string password, byte[] salt, byte[] hash)
         {
             var newHash = HashPassword(password, salt);
             return hash.SequenceEqual(newHash);

@@ -12,10 +12,7 @@ namespace BL.Services
 
         private readonly IRepository<Subject> _subjectRepository;
 
-        public SubjectService(IRepository<Subject> subjectRepository)
-        {
-            _subjectRepository = subjectRepository;
-        }
+        public SubjectService(IRepository<Subject> subjectRepository) => _subjectRepository = subjectRepository;
 
         public IEnumerable<Subject> GetSubjects()
         {

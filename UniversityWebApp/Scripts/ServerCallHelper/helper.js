@@ -1,8 +1,0 @@
-﻿class ServerCall {
-    url,
-    dataObj,
-
-
-
-
-}

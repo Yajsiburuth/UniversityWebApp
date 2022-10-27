@@ -7,85 +7,76 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/Css/studentRegistration.css" />
+    <link rel="stylesheet" href="~/Content/css/form.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/ServerCallHelper/ServerCall.js"></script>
     <script type="text/javascript" src="~/Scripts/studentScripts.js"></script>
 </head>
 <body onload="loadDropdown()">
-    <div id="student-registration-form-wrap">
-    <h2>Student Registration</h2>
-        <hr />
-        <form id="formStudentRegistration">
-            <fieldset>
-                <legend>Student Details</legend>
-                <div class="form-group">
-                    <p><input required type="text" id="FirstName" name="FirstName" class="form-control" placeholder="Firstname" /></p>
+    <div class="container">
+        <div class="title">Student Registration</div>
+        <div class="content">
+            <form onsubmit="createStudent()">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">First Name</span>
+                        <input type="text" id="FirstName" name="FirstName" placeholder="Firstname" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Last Name</span>
+                        <input type="text" id="LastName" name="LastName" placeholder="Lastname" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Phone Number</span>
+                        <input type="text" id="PhoneNumber" name="PhoneNumber" placeholder="Enter your Phone Number" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Date of Birth</span>
+                        <input type="date" id="DoB" name="DoB" placeholder="Enter your Date of Birth" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">National ID</span>
+                        <input type="text" id="Nid" name="Nid" placeholder="Enter your National ID" required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Guardian's Name</span>
+                        <input type="text" id="GuardianName" name="GuardianName" placeholder="Enter Guardian's name" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <p><input required type="text" id="LastName" name="LastName" class="form-control" placeholder="Lastname" /></p>
+                <div class="title">
+                    HSC Result<button class="fa fa-plus-circle" style="color:darkblue; border:0;background-color: transparent;font-size: larger;" onclick="addResultRow()" type="button" id="addButton"></button>
                 </div>
-                <div class="form-group">
-                    <p><input required type="text" id="PhoneNumber" name="PhoneNumber" class="form-control" placeholder="Phone number e.g +23057960888" minlength="12"/></p>
-                </div>
-                <div class="form-group">
-                    <p><input required type="date" id="DoB" name="DoB" class="form-control" placeholder="Date of Birth" max="2005-01-01" min=""/></p>
-                </div>
-                <div class="form-group">
-                    <p><input required type="text" id="Nid" name="Nid" class="form-control" placeholder="National Id" /></p>
-                </div>
-            </fieldset>
-            <hr />
-            <fieldset>
-                
-                <legend>Result Details<button class="fa fa-plus-circle" style="color:darkblue; border:0;background-color: transparent;font-size: large;" onclick="addResultRow()" type="button" id="addButton"></button></legend>
-                <div class="form-group">
+                <div class="input-box-table">
                     <table id="AddItemsTable">
                         <tr>
                             <th>Subject</th>
                             <th>Result</th>
                         </tr>
                         <tr>
-                            <th>
+                            <td>
                                 <select required onchange="checkValue()" id="dropdownSubjects0" name="dropdownSubjects0" class="form-control">
                                 </select>
-                            </th>
-                            <th>
-                                <select required class="form-control" id="Grade[0].Result" name="Grade[0].Result">
+                            </td>
+                            <td>
+                                <select required class="resultSelect" id="Grade[0].Result" name="Grade[0].Result">
                                     <option label="-" value=""></option>
-                                    <option value="A">A</option>
-                                    <option value="B">B</option>
-                                    <option value="C">C</option>
-                                    <option value="D">D</option>
-                                    <option value="E">E</option>
-                                    <option value="F">F</option>
+                                    <option value="A">A - 10 Points</option>
+                                    <option value="B">B - 8 Points</option>
+                                    <option value="C">C - 6 Points</option>
+                                    <option value="D">D - 4 Points</option>
+                                    <option value="E">E - 2 Points</option>
+                                    <option value="F">F - 0 Points</option>
                                 </select>
-                            </th>
+                            </td>
                         </tr>
                     </table>
                 </div>
-            </fieldset>
-            <hr />
-
-            <fieldset>
-                <legend>Guardian Details</legend>
-                <div class="form-group">
-                    <p><input required type="text" id="guardianFirstName" name="guardianFirstName" class="form-control" placeholder="Guardian's Firstname" /></p>
+                <div class="button">
+                    <input type="submit" value="Register">
                 </div>
-                <div class="form-group">
-                    <p><input required type="text" id="guardianLastName" name="guardianLastName" class="form-control" placeholder="Guardian's Lastname" /></p>
-                </div>
-                <div class="form-group">
-                    <p><input required type="text" id="guardianPhoneNumber" name="guardianPhoneNumber" class="form-control" placeholder="Guardian's Phone number" /></p>
-                </div>
-            </fieldset>
-            <div class="form-group">
-                <p><input onclick="createStudent()" type="submit" value="Create" class="btn btn-default" /></p>
-            </div>
-            <hr />
-
-        </form>
+            </form>
+        </div>
     </div>
 </body>
 </html>

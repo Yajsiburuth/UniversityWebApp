@@ -5,13 +5,9 @@ namespace BL.Services
 {
     public class GradeService
     {
-
         private readonly IRepository<Grade> _gradeRepository;
 
-        public GradeService(IRepository<Grade> gradeRepository)
-        {
-            _gradeRepository = gradeRepository;
-        }
+        public GradeService(IRepository<Grade> gradeRepository) => _gradeRepository = gradeRepository;
 
         public int AddResults(Grade grade)
         {
