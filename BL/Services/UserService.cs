@@ -10,7 +10,6 @@ namespace BL.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService() => _userRepository = new UserRepository();
         public UserService(IUserRepository user) => _userRepository = user;
 
         public User Register(string email, string password)

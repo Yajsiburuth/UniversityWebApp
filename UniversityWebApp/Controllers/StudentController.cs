@@ -8,7 +8,6 @@ namespace UniversityWebApp.Controllers
     public class StudentController : Controller
     {
         private readonly IStudentService _studentService;
-        public StudentController() => _studentService = new StudentService();
         public StudentController(IStudentService studentService) => _studentService = studentService;
 
         [HttpPost]

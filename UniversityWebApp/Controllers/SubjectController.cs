@@ -7,7 +7,6 @@ namespace UniversityWebApp.Controllers
     public class SubjectController : Controller
     {
         private readonly ISubjectService _subjectService;
-        public SubjectController() => _subjectService = new SubjectService();
         public SubjectController(ISubjectService subjectService) => _subjectService = subjectService;
 
         public JsonResult GetSubjects()

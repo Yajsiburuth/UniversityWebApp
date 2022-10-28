@@ -8,7 +8,6 @@ namespace UniversityWebApp.Controllers
     public class SubjectResultController : Controller
     {
         private readonly ISubjectResultService _subjectResultService;
-        public SubjectResultController() => _subjectResultService = new SubjectResultService();
         public SubjectResultController(ISubjectResultService subjectResultService) => _subjectResultService = subjectResultService;
 
         [HttpPost]

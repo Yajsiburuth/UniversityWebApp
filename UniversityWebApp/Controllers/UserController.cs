@@ -10,7 +10,6 @@ namespace UniversityWebApp.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        public UserController() => _userService = new UserService();
         public UserController(IUserService userService) => _userService = userService;
 
         [HttpGet]
