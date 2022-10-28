@@ -26,13 +26,13 @@ namespace DAL.ViewModels
         [Required(AllowEmptyStrings = false, ErrorMessage = "Date of birth must be set")]
         [DataType(DataType.Date)]
         [Range(typeof(DateTime), "1/1/1900", "1/1/2006")]
-        public DateTime DoB { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         [Display(Name = "National Id card number")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "National Id card number cannot be empty")]
         [DataType(DataType.Text)]
         [MinLength(14), MaxLength(14)]
-        public string Nid { get; set; }
+        public string NationalId { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Guardian name must be set")]
         [DataType(DataType.Text)]
@@ -46,7 +46,7 @@ namespace DAL.ViewModels
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Must set result")]
         [DataType(DataType.Custom)]
-        public List<ResultGrade> SubjectResult {get; set; }
+        public List<Grade> SubjectResult {get; set; }
 
     }
 }

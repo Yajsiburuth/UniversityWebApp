@@ -9,7 +9,7 @@ namespace UniversityWebApp.Controllers
     {
         private readonly SubjectService _subjectService = new SubjectService(new SubjectRepository());
         private readonly StudentService _studentService = new StudentService(new StudentRepository());
-        private readonly GradeService _gradeService = new GradeService(new GradeRepository());
+        private readonly SubjectResultService _gradeService = new SubjectResultService(new SubjectResultRepository());
 
         [Authorize]
         [HttpGet]
@@ -28,9 +28,9 @@ namespace UniversityWebApp.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddResults(Grade grade)
+        public JsonResult AddResults(SubjectResult subjectResults)
         {
-            int rows = _gradeService.AddResults(grade);
+            int rows = _gradeService.AddResults(subjectResults);
             return Json(new { result = rows > 0 ? true : false, url = Url.Action("Index", "Home") });
         }
 

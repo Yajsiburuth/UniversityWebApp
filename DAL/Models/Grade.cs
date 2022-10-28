@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace DAL.Models
+﻿namespace DAL.Models
 {
-    public class Grade
+    public enum Grade
     {
-        public int StudentId { get; set; }
-        public List<int> SubjectId { get; set; }
-        public List<ResultGrade> Result { get; set; }
-
+        F = 0,
+        E = 2,
+        D = 4,
+        C = 6,
+        B = 8,
+        A = 10
     }
 }

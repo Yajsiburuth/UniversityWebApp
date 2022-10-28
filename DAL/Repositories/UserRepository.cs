@@ -11,7 +11,7 @@ namespace DAL.Repositories
         public IEnumerable<User> GetAll()
         {
             IEnumerable<User> users = new List<User>();
-            SqlCommand command = new SqlCommand("SELECT * FROM user", conn);
+            SqlCommand command = new SqlCommand("SELECT id, email, password, salt, role FROM user", conn);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -32,7 +32,7 @@ namespace DAL.Repositories
         public User Find(int id)
         {
             User user = null;
-            SqlCommand command = new SqlCommand("SELECT * FROM [user] WHERE id=@Id", conn);
+            SqlCommand command = new SqlCommand("SELECT id, email, password, salt, role FROM [user] WHERE id=@Id", conn);
             command.Parameters.AddWithValue("@Id", id);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -54,7 +54,7 @@ namespace DAL.Repositories
         public User Find(string email)
         {
             User user = null;
-            SqlCommand command = new SqlCommand("SELECT * FROM [user] WHERE email=@Email", conn);
+            SqlCommand command = new SqlCommand("SELECT id, email, password, salt, role FROM [user] WHERE email=@Email", conn);
             command.Parameters.AddWithValue("@Email", email);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
