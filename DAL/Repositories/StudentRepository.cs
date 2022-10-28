@@ -12,7 +12,7 @@ namespace DAL.Repositories
         public IEnumerable<Student> GetAll()
         {
             IEnumerable<Student> students = new List<Student>();
-            SqlCommand command = new SqlCommand("SELECT id, first_name, last_name, phone_number, date_of_birth, guardian_name, national_id, user_id, status FROM student", conn);
+            SqlCommand command = new SqlCommand("SELECT StudentId, FirstName, LastName, PhoneNumber, DateOfBirth, GuardianName, NationalId, UserId, Status FROM Student", conn);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -35,11 +35,11 @@ namespace DAL.Repositories
             return students;
         }
 
-        public Student Find(int id)
+        public Student Find(int studentId)
         {
             Student student = null;
-            SqlCommand command = new SqlCommand("SELECT id, first_name, last_name, phone_number, date_of_birth, guardian_name, national_id, user_id, status FROM student WHERE id = @Id", conn);
-            command.Parameters.AddWithValue("@Id", id);
+            SqlCommand command = new SqlCommand("SELECT StudentId, FirstName, LastName, PhoneNumber, DateOfBirth, GuardianName, NationalId, UserId, Status FROM Student WHERE StudentId = @StudentId", conn);
+            command.Parameters.AddWithValue("@StudentId", studentId);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -61,7 +61,7 @@ namespace DAL.Repositories
         public int Create(Student student)
         {
             int studentId = 0;
-            SqlCommand command = new SqlCommand("INSERT INTO student (first_name, last_name, phone_number, date_of_birth, guardian_name, national_id, user_id, status) " +
+            SqlCommand command = new SqlCommand("INSERT INTO student (FirstName, LastName, PhoneNumber, DateOfBirth, GuardianName, NationalId, UserId, Status) " +
                 "VALUES (@FirstName, @LastName, @PhoneNumber, @DateOfBirth, @GuardianName, @NationalId, @UserId, @Status); " +
                 "SELECT SCOPE_IDENTITY();"
                 , conn);

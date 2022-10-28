@@ -12,7 +12,7 @@ namespace DAL.ViewModels
         public DateTime DateOfBirth { get; set; }
         public string NationalId { get; set; }
         public int UserId { get; set; }
-        public Status status { get; set; }
+        public Status Status { get; set; }
         public int SubjectId { get; set; }
         public string SubjectName { get; set; }
         public Grade result { get; set; }

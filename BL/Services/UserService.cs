@@ -7,33 +7,29 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BL.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-
+        public UserService() => _userRepository = new UserRepository();
         public UserService(IUserRepository user) => _userRepository = user;
 
         public User Register(string email, string password)
         {
+            User user = _userRepository.Find(email);
+            if (user != null) return null;
             byte[] salt = HashingHelper.CreateSalt();
             byte[] passwordHash = HashingHelper.HashPassword(password, salt);
-            User user = new User { Email = email, PasswordHash = passwordHash, Salt = salt, Role = Role.User};
+            user = new User { Email = email, PasswordHash = passwordHash, Salt = salt, Role = Role.User };
             _userRepository.Create(user);
             return user;
         }
 
-        public User Authenticate(LoginUserViewModel loginVm)
+        public User Authenticate(LoginUserViewModel loginUserViewModel)
         {
-            User user = GetUser(loginVm.Email);
-            if (user != null)
-            {
-                if (!HashingHelper.VerifyHash(loginVm.Password, user.Salt, user.PasswordHash))
-                    return null;
-            }
+            User user = _userRepository.Find(loginUserViewModel.Email);
+            if (user == null) return null;
+            if (!HashingHelper.VerifyHash(loginUserViewModel.Password, user.Salt, user.PasswordHash)) return null;
             return user;
         }
-
-        public User GetUser(string email) => _userRepository.Find(email);
-
     }
 }

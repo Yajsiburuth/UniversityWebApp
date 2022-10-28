@@ -3,18 +3,12 @@ using DAL.Repositories;
 
 namespace BL.Services
 {
-    public class SubjectResultService
+    public class SubjectResultService : ISubjectResultService
     {
         private readonly IRepository<SubjectResult> _subjectResultRepository;
-
+        public SubjectResultService() => _subjectResultRepository = new SubjectResultRepository();
         public SubjectResultService(IRepository<SubjectResult> subjectResultRepository) => _subjectResultRepository = subjectResultRepository;
 
-        public int AddResults(SubjectResult subjectResult)
-        {
-            int rows = _subjectResultRepository.Create(subjectResult);
-            return rows;
-        }
-
-
+        public int CreateResults(SubjectResult subjectResult) => _subjectResultRepository.Create(subjectResult);
     }
 }

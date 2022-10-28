@@ -29,7 +29,7 @@ namespace Helpers.Helper
 
         public static bool VerifyHash(string password, byte[] salt, byte[] hash)
         {
-            var newHash = HashPassword(password, salt);
+            byte[] newHash = HashPassword(password, salt);
             return hash.SequenceEqual(newHash);
         }
     }

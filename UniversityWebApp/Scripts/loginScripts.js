@@ -39,7 +39,7 @@ function signIn() {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
     var authObj = { Email: email, Password: password };
-    var serverCall = new ServerCall({ url: "/User/Login", parameters: authObj, callMethod: "POST" })
+    var serverCall = new ServerCall({ url: "/User/Authenticate", parameters: authObj, callMethod: "POST" })
     serverCall.fetchApiCall().then((response) => {
         if (response.result) {
             toastr.success("Authentication Successful");

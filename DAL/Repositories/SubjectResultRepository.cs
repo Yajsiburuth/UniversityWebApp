@@ -16,18 +16,18 @@ namespace DAL.Repositories
             var subjectsAndResults = subjectResult.SubjectId.Zip(subjectResult.Result, (s, r) => new { Subject = s, Result = r });
             foreach(var subjectAndResult in subjectsAndResults)
             {
-                command = new SqlCommand(@"INSERT INTO grade (student_id, subject_id, result)
-                VALUES (@StudentId, @SubjectId, @Result); ", conn);
+                command = new SqlCommand(@"INSERT INTO SubjectResult (StudentId, SubjectId, Grade)
+                VALUES (@StudentId, @SubjectId, @Grade); ", conn);
                 command.Parameters.AddWithValue("@StudentId", subjectResult.StudentId);
                 command.Parameters.AddWithValue("@SubjectId", subjectAndResult.Subject);
-                command.Parameters.AddWithValue("@Result",  (byte)subjectAndResult.Result);
+                command.Parameters.AddWithValue("@Grade",  (byte)subjectAndResult.Result);
                 rows = command.ExecuteNonQuery();
                 command.Dispose();
             }
             return rows;
         }
 
-        public SubjectResult Find(int id)
+        public SubjectResult Find(int subjectResultId)
         {
             throw new NotImplementedException();
         }

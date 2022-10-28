@@ -143,6 +143,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\SubjectController.cs" />
+    <Compile Include="Controllers\SubjectResultController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -207,6 +210,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Demo\" />
+    <Folder Include="Views\Student\" />
+    <Folder Include="Views\SubjectResult\" />
     <Folder Include="Views\Subject\" />
   </ItemGroup>
   <ItemGroup>
@@ -223,13 +228,13 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BL\BL.csproj">
+    <ProjectReference Include="..\BL\BusinessLayer.csproj">
       <Project>{b6e9c704-4e68-4de4-99e2-7b9e35aff3e5}</Project>
-      <Name>BL</Name>
+      <Name>BusinessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL.csproj">
+    <ProjectReference Include="..\DAL\DataAccessLayer.csproj">
       <Project>{4a6dba32-11d2-44ba-96f1-5b272118f637}</Project>
-      <Name>DAL</Name>
+      <Name>DataAccessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Helpers\Helpers.csproj">
       <Project>{022303a0-1819-4197-b764-7b4a1c215997}</Project>

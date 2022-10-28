@@ -87,7 +87,7 @@ function checkValue() {
 }
 
 function loadDropdown() {
-    var serverCall = new ServerCall({ url: "/Home/GetSubjects", callMethod: "GET" });
+    var serverCall = new ServerCall({ url: "/Subject/GetSubjects", callMethod: "GET" });
     serverCall.fetchApiCall().then(response => {
         if (response.result) {
             //toastr.success("Loaded");
@@ -139,14 +139,14 @@ function createStudent() {
     console.table(selectedSubjectResultList);
 
     studentDataObj = { FirstName: firstName, LastName: lastName, PhoneNumber: phoneNumber, DateOfBirth: dateOfBirth, NationalId: nationalId, GuardianName: guardianName }
-    var studentServerCall = new ServerCall({ url: "/Home/CreateStudent", parameters: studentDataObj, callMethod: "POST" });
+    var studentServerCall = new ServerCall({ url: "/Student/CreateStudent", parameters: studentDataObj, callMethod: "POST" });
     studentServerCall.fetchApiCall().then(response => {
         if (response.result) {
             studentId = response.studentId;
             console.log(studentId);
             subjectResultsDataObj = { StudentId: studentId, subjectId: selectedSubjectList, result: selectedSubjectResultList };
             console.table(subjectResultsDataObj);
-            var subjectResultsServerCall = new ServerCall({ url: "/Home/AddResults", parameters: subjectResultsDataObj, callMethod: "POST" });
+            var subjectResultsServerCall = new ServerCall({ url: "/SubjectResult/CreateResults", parameters: subjectResultsDataObj, callMethod: "POST" });
             subjectResultsServerCall.fetchApiCall().then(response => {
                 if (response.result) {
                     toastr.success("Registered sucessfully!");

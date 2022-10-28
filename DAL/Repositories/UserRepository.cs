@@ -11,7 +11,7 @@ namespace DAL.Repositories
         public IEnumerable<User> GetAll()
         {
             IEnumerable<User> users = new List<User>();
-            SqlCommand command = new SqlCommand("SELECT id, email, password, salt, role FROM user", conn);
+            SqlCommand command = new SqlCommand("SELECT UserId, Email, PasswordHash, Salt, Role FROM User", conn);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -29,11 +29,11 @@ namespace DAL.Repositories
             return users;
         }
 
-        public User Find(int id)
+        public User Find(int userId)
         {
             User user = null;
-            SqlCommand command = new SqlCommand("SELECT id, email, password, salt, role FROM [user] WHERE id=@Id", conn);
-            command.Parameters.AddWithValue("@Id", id);
+            SqlCommand command = new SqlCommand("SELECT UserId, Email, PasswordHash, Salt, Role FROM User WHERE UserId=@UserId", conn);
+            command.Parameters.AddWithValue("@UserId", userId);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -54,7 +54,7 @@ namespace DAL.Repositories
         public User Find(string email)
         {
             User user = null;
-            SqlCommand command = new SqlCommand("SELECT id, email, password, salt, role FROM [user] WHERE email=@Email", conn);
+            SqlCommand command = new SqlCommand("SELECT UserId, Email, PasswordHash, Salt, Role FROM [User] WHERE Email=@Email", conn);
             command.Parameters.AddWithValue("@Email", email);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -75,7 +75,7 @@ namespace DAL.Repositories
 
         public int Create(User user)
         {
-            SqlCommand command = new SqlCommand("INSERT INTO [user] (email, password, salt, role) VALUES (@Email, @Password, @Salt, @Role)", conn);
+            SqlCommand command = new SqlCommand("INSERT INTO [User] (Email, PasswordHash, Salt, Role) VALUES (@Email, @Password, @Salt, @Role)", conn);
             command.Parameters.AddWithValue("@Email", user.Email);
             command.Parameters.AddWithValue("@Password", user.PasswordHash);
             command.Parameters.AddWithValue("@Salt", user.Salt);
@@ -87,7 +87,7 @@ namespace DAL.Repositories
 
         public void Update(User user)
         {
-            SqlCommand command = new SqlCommand("UPDATE user SET email = @Email, password = @Password, role = @Role WHERE id = @id");
+            SqlCommand command = new SqlCommand("UPDATE User SET Email = @Email, PasswordHash = @Password, Role = @Role WHERE Id = @Id");
             command.Parameters.AddWithValue("@Email", user.Email);
             command.Parameters.AddWithValue("@Password", user.PasswordHash);
             command.Parameters.AddWithValue("@Salt", user.Salt);
