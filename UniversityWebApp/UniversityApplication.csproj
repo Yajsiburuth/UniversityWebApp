@@ -171,11 +171,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\admin.css" />
     <Content Include="Content\css\form.css" />
+    <Content Include="Content\css\home.css" />
     <Content Include="Content\css\login-registration.css" />
-    <Content Include="Css\home.css" />
-    <Content Include="Css\studentRegistration.css" />
-    <Content Include="Css\registration.css" />
-    <Content Include="Css\login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -212,14 +209,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\Home\RegisterStudentbak.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
-    <Content Include="Views\Home\RegisterStudent.cshtml" />
     <Content Include="Views\Student\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Demo\" />
     <Folder Include="Views\SubjectResult\" />
     <Folder Include="Views\Subject\" />
   </ItemGroup>
