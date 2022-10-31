@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DAL.Models
 {
@@ -6,7 +7,7 @@ namespace DAL.Models
     {
         public int SubjectResultId { get; set; }
         public int StudentId { get; set; }
-        public List<int> SubjectId { get; set; }
+        public List<Int16> SubjectId { get; set; }
         public List<Grade> Result { get; set; }
     }
 }

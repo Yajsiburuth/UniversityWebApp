@@ -1,4 +1,5 @@
 ﻿using DAL.Models;
+using DAL.ViewModels;
 using Helpers.Helper;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace DAL.Repositories
 {
-    public class StudentRepository : DatabaseHelper, IRepository<Student>
+    public class StudentRepository : DatabaseHelper, IStudentRepository
     {
         public IEnumerable<Student> GetAll()
         {
@@ -35,23 +36,26 @@ namespace DAL.Repositories
             return students;
         }
 
-        public Student Find(int studentId)
+        public Student Find(int userId)
         {
             Student student = null;
-            SqlCommand command = new SqlCommand("SELECT StudentId, FirstName, LastName, PhoneNumber, DateOfBirth, GuardianName, NationalId, UserId, Status FROM Student WHERE StudentId = @StudentId", conn);
-            command.Parameters.AddWithValue("@StudentId", studentId);
+            SqlCommand command = new SqlCommand("SELECT StudentId, FirstName, LastName, PhoneNumber, DateOfBirth, GuardianName, NationalId, UserId, Status FROM Student WHERE UserId = @UserId", conn);
+            command.Parameters.AddWithValue("@UserId", userId);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                student.StudentId = reader.GetInt32(0);
-                student.FirstName = reader.GetString(1);
-                student.LastName = reader.GetString(2);
-                student.PhoneNumber = reader.GetString(3);
-                student.DateOfBirth = reader.GetDateTime(4);
-                student.GuardianName = reader.GetString(5);
-                student.NationalId = reader.GetString(6);
-                student.UserId = reader.GetInt32(7);
-                student.Status = (Status)reader.GetInt32(8);
+                student = new Student()
+                {
+                    StudentId = reader.GetInt32(0),
+                    FirstName = reader.GetString(1),
+                    LastName = reader.GetString(2),
+                    PhoneNumber = reader.GetString(3),
+                    DateOfBirth = reader.GetDateTime(4),
+                    GuardianName = reader.GetString(5),
+                    NationalId = reader.GetString(6),
+                    UserId = reader.GetInt32(7),
+                    Status = (Status)reader.GetInt16(8)
+                };
             }
             reader.Close();
             command.Dispose();
@@ -100,6 +104,68 @@ namespace DAL.Repositories
 
             command.ExecuteNonQuery();
             command.Dispose();
+        }
+
+        public int GetStatus(int userId)
+        {
+            SqlCommand command = new SqlCommand("SELECT Status FROM Student WHERE UserId = @UserId", conn);
+            command.Parameters.AddWithValue("@UserId", userId);
+            object returnObject = command.ExecuteScalar();
+            if(returnObject == null)
+                return -1;
+
+            return (Int16) returnObject;
+        }
+
+        public List<StudentSummary> GetSummary()
+        {
+            List<StudentSummary> studentsSummary = new List<StudentSummary>();
+            SqlCommand command = new SqlCommand(@";WITH CTE
+                                                    AS
+                                                    (
+                                                        SELECT s.StudentId, s.FirstName, s.LastName, s.PhoneNumber, s.DateOfBirth, s.GuardianName, s.NationalId, s.UserId, su.SubjectName, sR.Grade, s.Status
+                                                        FROM Student s LEFT JOIN (SubjectResult sR LEFT JOIN Subject su on sR.SubjectId = su.SubjectId) on s.StudentId = sR.StudentId
+                                                    )          
+                                                    SELECT DISTINCT(i1.StudentId), i1.FirstName, i1.LastName, i1.PhoneNumber, i1.DateOfBirth, i1.GuardianName, i1.NationalId, i1.UserId, STUFF(
+                                                               (SELECT
+                                                                    ', ' + SubjectName
+                                                                    FROM CTE i2
+                                                                    WHERE i1.StudentId = i2.StudentId
+                                                                    FOR XML PATH(''))
+                                                               ,1,2, ''
+                                                            ) as SubjectsTaken, SUM(i1.Grade) as TotalResult, i1.Status     
+    
+                                                    FROM CTE i1
+                                                    GROUP BY i1.StudentId, i1.FirstName, i1.LastName, i1.PhoneNumber, i1.DateOfBirth, i1.GuardianName, i1.NationalId, i1.UserId, i1.Status
+                                                    ORDER BY i1.Status DESC, TotalResult DESC", conn);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                studentsSummary.Add(
+                    new StudentSummary()
+                    {
+                        StudentId = reader.GetInt32(0),
+                        FirstName = reader.GetString(1),
+                        LastName = reader.GetString(2),
+                        PhoneNumber = reader.GetString(3),
+                        DateOfBirth = reader.GetDateTime(4),
+                        GuardianName = reader.GetString(5),
+                        NationalId = reader.GetString(6),
+                        UserId = reader.GetInt32(7),
+                        SubjectsTaken = reader.GetString(8),
+                        TotalResult = reader.GetInt32(9),
+                        Status = ((Status)reader.GetInt16(10)).ToString(),
+                    });
+            }
+            reader.Close();
+            command.Dispose();
+            return studentsSummary;
+        }
+
+        public List<int> ApproveStudents(List<int> studentIds)
+        {
+            List<int> approvedStudents = new List<int>();
+            throw new NotImplementedException();
         }
     }
 }

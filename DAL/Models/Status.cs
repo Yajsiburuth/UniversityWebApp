@@ -1,6 +1,8 @@
-﻿namespace DAL.Models
+﻿using System;
+
+namespace DAL.Models
 {
-    public enum Status
+    public enum Status : Int16
     {
         Rejected = 0,
         Waiting = 1,

@@ -1,5 +1,4 @@
 ﻿using BL.Services;
-using DAL.Repositories;
 using System.Web.Mvc;
 
 namespace UniversityWebApp.Controllers
@@ -9,6 +8,7 @@ namespace UniversityWebApp.Controllers
         private readonly ISubjectService _subjectService;
         public SubjectController(ISubjectService subjectService) => _subjectService = subjectService;
 
+        [HttpGet]
         public JsonResult GetSubjects()
         {
             var subjectList = _subjectService.GetSubjects();

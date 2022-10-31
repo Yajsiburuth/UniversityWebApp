@@ -27,7 +27,7 @@ function addResultRow() {
             '<option value="E">E - 2 Points</option>' +
             '<option value="F">F - 0 Points</option>' +
             '</select></th>' +
-            '<th><button class="fa fa-close" style="color:red; border:0;background-color: transparent;font-size: large;" onclick="removeResultRow()" id="removeButton' + counter + '" /></th>';
+            '<th><button class="fa fa-close" style="color:red; border:0;background-color: transparent;font-size: larger;" onclick="removeResultRow()" id="removeButton' + counter + '" /></th>';
 
         var dropdown = document.getElementById("dropdownSubjects" + counter);
         addSubjectsToDropdown(dropdown);
@@ -95,7 +95,6 @@ function loadDropdown() {
             var dropdown = document.getElementById("dropdownSubjects0");
             addSubjectsToDropdown(dropdown);
         } else {
-            console.log()
             toastr.error("Unable to load");
         }
     })

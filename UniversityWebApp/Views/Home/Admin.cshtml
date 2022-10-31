@@ -5,29 +5,70 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="~/Content/css/admin.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/b-1.5.4/b-html5-1.5.4/b-print-1.5.4/fh-3.1.4/sc-1.5.0/sl-1.2.6/datatables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/sorting/datetime-moment.js"></script>
     <script type="text/javascript" src="~/Scripts/ServerCallHelper/ServerCall.js"></script>
     <script type="text/javascript" src="~/Scripts/adminScripts.js"></script>
+    <script defer type="text/javascript" src="~/Scripts/edit-table.js"></script>
+
 </head>
-<body onload="loadEmail()">
-    <h3 id="emailDisplay">You are signed in with: </h3>
-    <button onclick="DisplaySummary()">Display Summary of Registered Students</button>
-    <button onclick="logout()">Logout</button>
+<body onload="loadEmail(), DisplaySummary()">
+    <div class="nav">
+        <input type="checkbox" id="nav-check">
+        <div class="nav-header">
+            <div class="nav-title" id="navTitle">
+            </div>
+        </div>
+        <div class="nav-btn">
+            <label for="nav-check">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+        </div>
+
+        <div class="nav-links">
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </div>
+    <div class="title">
+        Registered Student Summary
+    </div>
+        <div id="studentSummary" class="container">
+            <table id="studentSummaryTable" class="content-table editable">
+                <thead>
+                    <tr>
+                        <th>Student Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone Number</th>
+                        <th>Date Of Birth</th>
+                        <th>Guardian Name</th>
+                        <th>National Id</th>
+                        <th>User Id</th>
+                        <th>Subjects Taken</th>
+                        <th>Total Result</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="action-buttons">
+                <div class="edit-btn">
+                    <button id="editButton" class="button-61" onclick="MakeAllCellsEditable()">Edit Details</button>
+                </div>
+                <div class="cancel-btn">
+                    <button id="cancelButton" disabled class="button-61" onclick="CancelChanges()">Cancel Changes</button>
+                </div>
+                <div class="save-btn">
+                    <button id="saveButton" disabled class="button-61" onclick="SaveChanges()">Save Details</button>
+                </div>
+            </div>
+        </div>
 </body>
-
-@*<p>You are signed in with: </p><h3></h3>
-    You are signed with: @HttpContext.Current.User.Identity.Name
-
-    @if (Request.IsAuthenticated)
-    {
-        using (Html.BeginForm("RegisterStudent", "Home", FormMethod.Get, new { id = "studentRegistrationForm" }))
-        {
-            <a href="javascript:document.getElementById('studentRegistrationForm').submit()">Student Registration</a>
-        }
-        using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
-        {
-            <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
-        }
-
-    }*@
 </html>
 

@@ -17,20 +17,18 @@ body {
 }
 
 .container {
-    width: 80%;
-    height: 80%;
     background-color: #fff;
     padding: 25px 30px;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 }
 
-    .container .title {
-        font-size: 25px;
-        font-weight: 500;
-        position: relative;
-        padding-top: 20px;
-    }
+.container .title {
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+    padding-top: 20px;
+}
 
         .container .title::before {
             content: "";
@@ -155,10 +153,10 @@ form .button {
 }
 
 .input-box-table {
-    margin-top: -10px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    flex: 1;
 }
 
 table {

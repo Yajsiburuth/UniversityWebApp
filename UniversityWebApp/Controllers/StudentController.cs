@@ -1,6 +1,7 @@
 ﻿using BL.Services;
 using DAL.Models;
 using DAL.Repositories;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace UniversityWebApp.Controllers
@@ -10,6 +11,10 @@ namespace UniversityWebApp.Controllers
         private readonly IStudentService _studentService;
         public StudentController(IStudentService studentService) => _studentService = studentService;
 
+        [Authorize]
+        [HttpGet]
+        public ActionResult Register() => View();
+
         [HttpPost]
         public JsonResult CreateStudent(Student student)
         {
@@ -17,6 +22,24 @@ namespace UniversityWebApp.Controllers
             student.UserId = loggedUser.UserId;
             int studentId = _studentService.RegisterStudent(student);
             return Json(new { result = studentId > 0, studentId });
+        }
+
+        [HttpGet]
+        public JsonResult GetStatus()
+        {
+            int userId = (int) Session["CurrentUserId"];
+            string status = _studentService.GetStatus(userId);
+            return Json(new { status }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetStudentsSummary() => Json(new { studentsSummary = _studentService.GetSummary() }, JsonRequestBehavior.AllowGet);
+
+        [HttpPost]
+        public JsonResult ApproveStudents(List<int> studentIds)
+        {
+            List<int> approvedIds = new List<int>();
+            approvedIds =_studentService.ApproveStudents(studentIds);
+            return Json(new { });
         }
     }
 }

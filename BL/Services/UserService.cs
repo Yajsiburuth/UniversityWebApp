@@ -10,7 +10,12 @@ namespace BL.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository user) => _userRepository = user;
+        private readonly IStudentRepository _studentRepository;
+        public UserService(IUserRepository user, IStudentRepository studentRepository)
+        {
+            _userRepository = user;
+            _studentRepository = studentRepository;
+        }
 
         public User Register(string email, string password)
         {
@@ -30,5 +35,7 @@ namespace BL.Services
             if (!HashingHelper.VerifyHash(loginUserViewModel.Password, user.Salt, user.PasswordHash)) return null;
             return user;
         }
+
+        public bool isUserRegisteredStudent(int userId) => _studentRepository.Find(userId) != null;
     }
 }

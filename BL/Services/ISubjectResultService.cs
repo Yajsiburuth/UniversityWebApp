@@ -4,6 +4,6 @@ namespace BL.Services
 {
     public interface ISubjectResultService
     {
-        int CreateResults(SubjectResult subjectResult);
+        void CreateResults(SubjectResult subjectResult);
     }
 }

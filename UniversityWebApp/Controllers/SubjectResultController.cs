@@ -13,8 +13,8 @@ namespace UniversityWebApp.Controllers
         [HttpPost]
         public JsonResult CreateResults(SubjectResult subjectResults)
         {
-            int rows = _subjectResultService.CreateResults(subjectResults);
-            return Json(new { result = rows > 0, url = Url.Action("Index", "Home") });
+            _subjectResultService.CreateResults(subjectResults);
+            return Json(new { result = true, url = Url.Action("Index", "Home") });
         }
     }
 }

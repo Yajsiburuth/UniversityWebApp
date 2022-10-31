@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace DAL.Repositories
 {
-    public class SubjectRepository : DatabaseHelper, IRepository<Subject>
+    public class SubjectRepository : DatabaseHelper, IRepository<Subject>, ISubjectRepository
     {
 
         public int Create(Subject entity)
@@ -28,7 +28,7 @@ namespace DAL.Repositories
             {
                 var subject = new Subject()
                 {
-                    SubjectId = reader.GetInt32(0),
+                    SubjectId = reader.GetInt16(0),
                     SubjectName = reader.GetString(1)
                 };
                 subjects.Add(subject);

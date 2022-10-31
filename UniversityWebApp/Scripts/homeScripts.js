@@ -1,4 +1,4 @@
-﻿function loadEmail() {
+﻿function loadData() {
     var serverCall = new ServerCall({ url: "/User/GetUser", callMethod: "GET" });
     serverCall.fetchApiCall().then(response => {
         if (response.user != null) {
@@ -11,6 +11,14 @@
         } else {
             toastr.error("Unable to load");
         }
+    })
+    var serverCallStudent = new ServerCall({ url: "/Student/GetStatus", callMethod: "GET" });
+    serverCallStudent.fetchApiCall().then(responseStudent => {
+        console.log(responseStudent);
+        var statusHeader = document.getElementById("enrollmentStatus");
+        var existingText = statusHeader.innerText;
+        var outputText = existingText.concat(" ", responseStudent.status);
+        statusHeader.innerText = outputText;
     })
 }
 

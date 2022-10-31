@@ -2,6 +2,8 @@
 using DAL.Models;
 using DAL.Repositories;
 using DAL.ViewModels;
+using System.Web;
+using System;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -31,20 +33,31 @@ namespace UniversityWebApp.Controllers
         {
             User user = _userService.Authenticate(loginUserViewModel);
             if (user == null) return Json(new { result = false });
-            FormsAuthentication.SetAuthCookie(user.UserId.ToString(), createPersistentCookie: true);
+            int timeout = 525600;
+            var ticket = new FormsAuthenticationTicket(user.UserId.ToString(), true, timeout);
+            string encrypted = FormsAuthentication.Encrypt(ticket);
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
+            cookie.Expires = DateTime.Now.AddMinutes(timeout);
+            cookie.HttpOnly = true;
+            Response.Cookies.Add(cookie);
+            //FormsAuthentication.SetAuthCookie(user.UserId.ToString(), createPersistentCookie: true, cookie);
             this.Session["CurrentUser"] = user;
             this.Session["CurrentRole"] = user.Role;
-            return Json(new { result = true, url = user.Role == Role.User ? Url.Action("Index", "Home") : Url.Action("Admin", "Home") });
+            this.Session["CurrentUserId"] = user.UserId;
+            if (user.Role == Role.Admin) return Json(new { result = true, url = Url.Action("Admin", "Home") });
+            var url = _userService.isUserRegisteredStudent(user.UserId) ? Url.Action("Index", "Home") : Url.Action("Register", "Student");
+            return Json(new { result = true, url });
         }
 
         [HttpGet]
         public JsonResult GetUser() => Json(new { user = this.Session["CurrentUser"] }, JsonRequestBehavior.AllowGet);
 
         [Authorize]
-        [HttpPost]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            Session.Clear();
+            Session.Abandon();
             return RedirectToAction("Login", "User");
         }
 

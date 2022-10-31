@@ -7,5 +7,6 @@ namespace BL.Services
     {
         User Authenticate(LoginUserViewModel loginUserViewModel);
         User Register(string email, string password);
+        bool isUserRegisteredStudent(int userId);
     }
 }

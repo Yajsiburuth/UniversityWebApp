@@ -1,4 +1,7 @@
-﻿body {
+﻿*{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+body {
     background-color: #9f9da7;
     font-size: 1.6rem;
     font-family: "Open Sans", sans-serif;

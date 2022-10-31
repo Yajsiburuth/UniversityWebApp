@@ -1,8 +1,10 @@
-﻿namespace DAL.Models
+﻿using System;
+
+namespace DAL.Models
 {
     public class Subject
     {
-        public int SubjectId { get; set; }
+        public Int16 SubjectId { get; set; }
         public string SubjectName { get; set; }
 
     }

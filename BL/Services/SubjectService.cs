@@ -6,8 +6,8 @@ namespace BL.Services
 {
     public class SubjectService : ISubjectService
     {
-        private readonly IRepository<Subject> _subjectRepository;
-        public SubjectService(IRepository<Subject> subjectRepository) => _subjectRepository = subjectRepository;
+        private readonly ISubjectRepository _subjectRepository;
+        public SubjectService(ISubjectRepository subjectRepository) => _subjectRepository = subjectRepository;
 
         public IEnumerable<Subject> GetSubjects() => _subjectRepository.GetAll();
     }
