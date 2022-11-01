@@ -16,5 +16,7 @@ namespace UniversityWebApp.Controllers
             _subjectResultService.CreateResults(subjectResults);
             return Json(new { result = true, url = Url.Action("Index", "Home") });
         }
+
+        public JsonResult GetResults() => Json(new { resultDetails = _subjectResultService.GetSubjectResults(int.Parse(Session["CurrentStudentId"].ToString())) }, JsonRequestBehavior.AllowGet);
     }
 }

@@ -12,13 +12,32 @@
     <script type="text/javascript" src="~/Scripts/ServerCallHelper/ServerCall.js"></script>
     <script type="text/javascript" src="~/Scripts/homeScripts.js"></script>
 </head>
-    <body onload="loadData()">
-        <div id="menu">
-            <h3 id="emailDisplay">You are signed in with: </h3>
-            <h3 id="enrollmentStatus">Enrollment Status: </h3>
-            <button onclick="redirectToStudentRegistration()">Student Registration</button>
-            <button onclick="logout()">Logout</button>
+<body onload="loadData()">
+    <div class="nav">
+        <input type="checkbox" id="nav-check">
+        <div class="nav-header">
+            <div class="nav-title" id="navTitle">
+            </div>
         </div>
-    </body>
+        <div class="nav-btn">
+            <label for="nav-check">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+        </div>
+
+        <div class="nav-links">
+            <a href="#" onclick="RedirectToProfile()">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </div>
+    <div id="menu">
+        <h3 id="emailDisplay">You are signed in with: </h3>
+        <h3 id="enrollmentStatus">Enrollment Status: </h3>
+        <button onclick="redirectToStudentRegistration()">Student Registration</button>
+        <button onclick="logout()">Logout</button>
+    </div>
+</body>
 </html>
 

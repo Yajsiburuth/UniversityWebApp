@@ -55,9 +55,22 @@ namespace DAL.Repositories
         }
 
 
-        public SubjectResult Find(int subjectResultId)
+        public SubjectResult Find(int studentId)
         {
-            throw new NotImplementedException();
+            SubjectResult subjectResult = new SubjectResult();
+            subjectResult.StudentId = studentId;
+            SqlCommand command = new SqlCommand("SELECT SubjectResultId, SubjectId, Grade FROM SubjectResult WHERE StudentId = @StudentId", conn);
+            command.Parameters.AddWithValue("@StudentId", studentId);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                subjectResult.SubjectResultId.Add(reader.GetInt32(0));
+                subjectResult.SubjectId.Add(reader.GetInt16(1));
+                subjectResult.Result.Add((Grade)reader.GetByte(2));
+            }
+            reader.Close();
+            command.Dispose();
+            return subjectResult;
         }
 
         public IEnumerable<SubjectResult> GetAll()

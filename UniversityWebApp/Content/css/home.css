@@ -7,6 +7,101 @@ body {
     font-family: "Open Sans", sans-serif;
     color: #2b3e51;
 }
+.nav {
+    width: 100%;
+    background-color: #3067db;
+    position: relative;
+    justify-content: space-between;
+}
+
+    .nav > .nav-header {
+        display: inline;
+    }
+
+        .nav > .nav-header > .nav-title {
+            display: inline-block;
+            font-size: 22px;
+            color: #fff;
+            padding: 10px 10px 10px 10px;
+        }
+
+    .nav > .nav-btn {
+        display: none;
+    }
+
+    .nav > .nav-links {
+        display: inline;
+        float: right;
+        font-size: 18px;
+    }
+
+        .nav > .nav-links > a {
+            display: inline-block;
+            padding: 13px 10px 13px 10px;
+            text-decoration: none;
+            color: #efefef;
+        }
+
+            .nav > .nav-links > a:hover {
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+    .nav > #nav-check {
+        display: none;
+    }
+
+@media (max-width:600px) {
+    .nav > .nav-btn {
+        display: inline-block;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
+
+        .nav > .nav-btn > label {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            padding: 13px;
+        }
+
+            .nav > .nav-btn > label:hover, .nav #nav-check:checked ~ .nav-btn > label {
+                background-color: rgba(0, 0, 0, 0.3);
+            }
+
+            .nav > .nav-btn > label > span {
+                display: block;
+                width: 25px;
+                height: 10px;
+                border-top: 2px solid #eee;
+            }
+
+    .nav > .nav-links {
+        position: absolute;
+        display: block;
+        width: 100%;
+        background-color: #333;
+        height: 0px;
+        transition: all 0.3s ease-in;
+        overflow-y: hidden;
+        top: 50px;
+        left: 0px;
+    }
+
+        .nav > .nav-links > a {
+            display: block;
+            width: 100%;
+        }
+
+    .nav > #nav-check:not(:checked) ~ .nav-links {
+        height: 0px;
+    }
+
+    .nav > #nav-check:checked ~ .nav-links {
+        height: calc(100vh - 50px);
+        overflow-y: auto;
+    }
+}
 h3 {
     font-weight: 300;
     text-align: center;
@@ -56,140 +151,3 @@ button {
 button:focus {
     box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
 }
-/*
-#menu {
-    background-color: #fff;
-    width: 40%;
-    margin: 60px auto;
-    text-align: center;
-    padding: 30px 0 0 0;
-    border-radius: 5px;
-    box-shadow: 0px 30px 50px 0px rgba(0, 0, 0, 0.2);
-}
-
-#formLogin {
-    padding: 0 60px;
-}
-
-input {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    outline: none;
-    height: 60px;
-    line-height: 60px;
-    border-radius: 4px;
-}
-
-    input[type="password"],
-    input[type="email"] {
-        width: 100%;
-        padding: 0 0 0 10px;
-        margin: 0;
-        border: 1px solid #c2c0ca;
-        font-style: normal;
-        font-size: 16px;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        position: relative;
-        display: inline-block;
-        background: none;
-    }
-
-        input[type="password"]:focus,
-        input[type="email"]:focus {
-            border-color: #3ca9e2;
-        }
-
-            input[type="password"]:focus:invalid,
-            input[type="email"]:focus:invalid {
-                color: #cc1e2b;
-                border-color: #cc1e2b;
-            }
-
-        input[type="password"]:valid ~ .validation,
-        input[type="email"]:valid ~ .validation {
-            display: block;
-            border-color: #0C0;
-        }
-
-            input[type="password"]:valid ~ .validation span,
-            input[type="email"]:valid ~ .validation span {
-                background: #0C0;
-                position: absolute;
-                border-radius: 6px;
-            }
-
-                input[type="password"]:valid ~ .validation span:first-child,
-                input[type="email"]:valid ~ .validation span:first-child {
-                    top: 30px;
-                    left: 14px;
-                    width: 20px;
-                    height: 3px;
-                    -webkit-transform: rotate(-45deg);
-                    transform: rotate(-45deg);
-                }
-
-                input[type="password"]:valid ~ .validation span:last-child,
-                input[type="email"]:valid ~ .validation span:last-child {
-                    top: 35px;
-                    left: 8px;
-                    width: 11px;
-                    height: 3px;
-                    -webkit-transform: rotate(45deg);
-                    transform: rotate(45deg);
-                }
-
-input[type="submit"] {
-    border: none;
-    display: block;
-    background-color: #3ca9e2;
-    color: #fff;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    -webkit-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-    font-size: 18px;
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    text-align: center;
-}
-
-    input[type="submit"]:hover {
-        background-color: #329dd5;
-        -webkit-transition: all 0.2s ease;
-        transition: all 0.2s ease;
-    }
-
-#create-account-wrap {
-    background-color: #eeedf1;
-    color: #8a8b8e;
-    font-size: 14px;
-    width: 100%;
-    padding: 10px 0;
-    border-radius: 0 0 4px 4px;
-}
-
-a,
-a:link,
-a:visited,
-a:active {
-    color: #3ca9e2;
-    -webkit-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-}
-
-    a:focus, a:hover,
-    a:link:focus,
-    a:link:hover,
-    a:visited:focus,
-    a:visited:hover,
-    a:active:focus,
-    a:active:hover {
-        color: #329dd5;
-        -webkit-transition: all 0.2s ease;
-        transition: all 0.2s ease;
-    }*/

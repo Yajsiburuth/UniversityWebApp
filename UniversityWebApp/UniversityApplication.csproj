@@ -170,6 +170,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\admin.css" />
+    <Content Include="Content\css\profile.css" />
     <Content Include="Content\css\form.css" />
     <Content Include="Content\css\home.css" />
     <Content Include="Content\css\login-registration.css" />
@@ -183,6 +184,7 @@
     <Content Include="Scripts\adminScripts.js" />
     <Content Include="Scripts\edit-table.js" />
     <Content Include="Scripts\ServerCallHelper\ServerCall.js" />
+    <Content Include="Scripts\studentProfileScripts.js" />
     <Content Include="Scripts\studentScripts.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -204,13 +206,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Student\Register.cshtml" />
+    <Content Include="Views\Student\StudentProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

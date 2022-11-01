@@ -11,6 +11,7 @@ namespace BL.Services
         public StudentService(IStudentRepository studentRepository) => _studentRepository = studentRepository;
 
         public int RegisterStudent(Student student) => _studentRepository.Create(student);
+        public Student GetStudent(int userId) => _studentRepository.Find(userId);
         public string GetStatus(int userId)
         {
             int status = _studentRepository.GetStatus(userId);

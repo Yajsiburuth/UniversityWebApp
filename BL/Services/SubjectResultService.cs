@@ -1,5 +1,6 @@
 ﻿using DAL.Models;
 using DAL.Repositories;
+using System.Runtime.InteropServices;
 
 namespace BL.Services
 {
@@ -9,5 +10,6 @@ namespace BL.Services
         public SubjectResultService(ISubjectResultRepository subjectResultRepository) => _subjectResultRepository = subjectResultRepository;
 
         public void CreateResults(SubjectResult subjectResult) => _subjectResultRepository.CreateResults(subjectResult);
+        public SubjectResult GetSubjectResults(int studentId) => _subjectResultRepository.Find(studentId);
     }
 }

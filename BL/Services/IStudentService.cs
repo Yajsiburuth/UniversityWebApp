@@ -8,6 +8,7 @@ namespace BL.Services
     {
         int RegisterStudent(Student student);
         string GetStatus(int userId);
+        Student GetStudent(int userId);
         List<StudentSummary> GetSummary();
         List<int> ApproveStudents(List<int> studentIds);
     }

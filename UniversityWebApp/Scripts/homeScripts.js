@@ -3,11 +3,10 @@
     serverCall.fetchApiCall().then(response => {
         if (response.user != null) {
             //toastr.success("Logged In");
-            var header = document.getElementById("emailDisplay");
-            var existingText = header.innerText;
+            var navTitle = document.getElementById("navTitle");
+            console.log(navTitle);
             var userEmail = response['user']['Email'];
-            var outputText = existingText.concat(" ", userEmail);
-            header.innerText = outputText;
+            navTitle.innerText = userEmail;
         } else {
             toastr.error("Unable to load");
         }
@@ -23,7 +22,11 @@
 }
 
 function redirectToStudentRegistration() {
-    window.location.href = "/Home/RegisterStudent";
+    window.location.href = "/Student/Register";
+}
+
+function RedirectToProfile() {
+    window.location.href = "/Student/StudentProfile";
 }
 
 function logout() {
