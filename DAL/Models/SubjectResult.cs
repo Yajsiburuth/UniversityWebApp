@@ -8,6 +8,6 @@ namespace DAL.Models
         public List<int> SubjectResultId { get; set; }
         public int StudentId { get; set; }
         public List<Int16> SubjectId { get; set; }
-        public List<Grade> Result { get; set; }
+        public List<Grade> Grade { get; set; }
     }
 }

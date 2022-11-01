@@ -143,7 +143,7 @@ function createStudent() {
         if (response.result) {
             studentId = response.studentId;
             console.log(studentId);
-            subjectResultsDataObj = { StudentId: studentId, subjectId: selectedSubjectList, result: selectedSubjectResultList };
+            subjectResultsDataObj = { StudentId: studentId, SubjectId: selectedSubjectList, Grade: selectedSubjectResultList };
             console.table(subjectResultsDataObj);
             var subjectResultsServerCall = new ServerCall({ url: "/SubjectResult/CreateResults", parameters: subjectResultsDataObj, callMethod: "POST" });
             subjectResultsServerCall.fetchApiCall().then(response => {

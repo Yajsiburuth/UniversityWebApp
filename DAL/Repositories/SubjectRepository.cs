@@ -22,7 +22,7 @@ namespace DAL.Repositories
         public IEnumerable<Subject> GetAll()
         {
             List<Subject> subjects = new List<Subject>();
-            SqlCommand command = new SqlCommand("SELECT SubjectId, SubjectName FROM Subject", conn);
+            SqlCommand command = new SqlCommand("SELECT SubjectId, SubjectName FROM [Subject]", conn);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {

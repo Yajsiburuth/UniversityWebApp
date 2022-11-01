@@ -8,17 +8,19 @@ namespace Helpers.Helper
 {
     public static class SqlHelper
     {
-        public static string GetColumnNames(this Type type, string alias = null, HashSet<string> excludedProp = null)
+        public static string GetColumnNames(this Type type, string alias = null, HashSet<string> excludedProp = null, bool parameter = false)
         {
             var props = type.GetProperties();
             var cols = new List<string>();
 
             foreach (var prop in props)
             {
-                if (prop.CustomAttributes.Any(z => z.AttributeType == typeof(IgnoreMappingAttribute)))
+                if (prop.CustomAttributes.Any(z => z.AttributeType == typeof(IgnoreMappingAttribute)) || (excludedProp?.Contains(prop.Name) ?? false))
                     continue;
                 if (alias != null)
                     cols.Add($"{alias}.{prop.Name}");
+                else if (parameter)
+                    cols.Add($"@{prop.Name}");
                 else
                     cols.Add($"{prop.Name}");
             }

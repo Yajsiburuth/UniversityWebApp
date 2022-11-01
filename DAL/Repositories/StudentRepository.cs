@@ -10,10 +10,13 @@ namespace DAL.Repositories
 {
     public class StudentRepository : DatabaseHelper, IStudentRepository
     {
+        string selectSQL = $"SELECT {SqlHelper.GetColumnNames(typeof(Student))} FROM [Student] ";
+        string insertSQL = $"INSERT INTO [Student] ({SqlHelper.GetColumnNames(typeof(Student), excludedProp: new HashSet<string>() { "StudentId" })}) VALUES ({SqlHelper.GetColumnNames(typeof(Student), parameter: true, excludedProp: new HashSet<string>() { "StudentId" })})";
+
         public IEnumerable<Student> GetAll()
         {
             IEnumerable<Student> students = new List<Student>();
-            SqlCommand command = new SqlCommand("SELECT StudentId, FirstName, LastName, PhoneNumber, DateOfBirth, GuardianName, NationalId, UserId, Status FROM Student", conn);
+            SqlCommand command = new SqlCommand(selectSQL, conn);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -39,7 +42,7 @@ namespace DAL.Repositories
         public Student Find(int userId)
         {
             Student student = null;
-            SqlCommand command = new SqlCommand("SELECT StudentId, FirstName, LastName, PhoneNumber, DateOfBirth, GuardianName, NationalId, UserId, Status FROM Student WHERE UserId = @UserId", conn);
+            SqlCommand command = new SqlCommand(selectSQL + "WHERE UserId = @UserId", conn);
             command.Parameters.AddWithValue("@UserId", userId);
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
@@ -65,10 +68,7 @@ namespace DAL.Repositories
         public int Create(Student student)
         {
             int studentId = 0;
-            SqlCommand command = new SqlCommand("INSERT INTO student (FirstName, LastName, PhoneNumber, DateOfBirth, GuardianName, NationalId, UserId, Status) " +
-                "VALUES (@FirstName, @LastName, @PhoneNumber, @DateOfBirth, @GuardianName, @NationalId, @UserId, @Status); " +
-                "SELECT SCOPE_IDENTITY();"
-                , conn);
+            SqlCommand command = new SqlCommand(insertSQL + "SELECT SCOPE_IDENTITY();", conn);
             command.Parameters.AddWithValue("@FirstName", student.FirstName);
             command.Parameters.AddWithValue("@LastName", student.LastName);
             command.Parameters.AddWithValue("@PhoneNumber", student.PhoneNumber);
