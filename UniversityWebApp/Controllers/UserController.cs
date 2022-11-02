@@ -1,10 +1,7 @@
 ﻿using BL.Services;
 using DAL.Models;
 using DAL.ViewModels;
-using System;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using UniversityWebApp.Helper;
 
 namespace UniversityWebApp.Controllers
@@ -35,14 +32,6 @@ namespace UniversityWebApp.Controllers
 
             User user = _userService.Authenticate(loginUserViewModel);
             if (user == null) return Json(new { result = false });
-            int timeout = 525600;
-            var ticket = new FormsAuthenticationTicket(user.UserId.ToString(), true, timeout);
-            string encrypted = FormsAuthentication.Encrypt(ticket);
-            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
-            cookie.Expires = DateTime.Now.AddMinutes(timeout);
-            cookie.HttpOnly = true;
-            Response.Cookies.Add(cookie);
-            //FormsAuthentication.SetAuthCookie(user.UserId.ToString(), createPersistentCookie: true, cookie);
             this.Session["CurrentUser"] = user;
             this.Session["CurrentRole"] = user.Role;
             this.Session["CurrentUserId"] = user.UserId;
@@ -53,10 +42,8 @@ namespace UniversityWebApp.Controllers
 
         public JsonResult GetUser() => Json(new { user = this.Session["CurrentUser"] }, JsonRequestBehavior.AllowGet);
 
-        [Authorize]
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut();
             Session.Clear();
             Session.Abandon();
             return RedirectToAction("Login", "User");

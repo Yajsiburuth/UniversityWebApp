@@ -1,7 +1,6 @@
 ﻿using BL.Services;
 using DAL.Models;
 using DAL.ViewModels;
-using System.Collections.Generic;
 using System.Web.Mvc;
 using UniversityWebApp.Helper;
 
@@ -12,7 +11,6 @@ namespace UniversityWebApp.Controllers
         private readonly IStudentService _studentService;
         public StudentController(IStudentService studentService) => _studentService = studentService;
 
-        [Authorize]
         public ActionResult Register() => View();
 
         public ActionResult StudentProfile() => View();
@@ -20,8 +18,11 @@ namespace UniversityWebApp.Controllers
         [HttpPost]
         public JsonResult CreateStudent(StudentViewModel studentViewModel)
         {
-            if (_studentService.CheckDuplicateNationalId(studentViewModel.NationalId)) ModelState.AddModelError("NationalId", "This National Id has already been registered");
-            if (_studentService.CheckDuplicatePhone(studentViewModel.PhoneNumber)) ModelState.AddModelError("PhoneNumber", "This Phone Number has already been registered");
+            if(studentViewModel.NationalId != null)              
+                if (_studentService.CheckDuplicateNationalId(studentViewModel.NationalId)) ModelState.AddModelError("NationalId", "This National Id has already been registered");
+            if(studentViewModel.PhoneNumber != null)
+                if (_studentService.CheckDuplicatePhone(studentViewModel.PhoneNumber)) ModelState.AddModelError("PhoneNumber", "This Phone Number has already been registered");
+
             if (!ModelState.IsValid) return Json(new { result = false, errors = ErrorHelper.ModelStateErrorsToDict(ModelState) });
             Student student = new Student();
             student.FirstName = studentViewModel.FirstName;
@@ -51,13 +52,5 @@ namespace UniversityWebApp.Controllers
         }
 
         public JsonResult GetStudentsSummary() => Json(new { studentsSummary = _studentService.GetSummary() }, JsonRequestBehavior.AllowGet);
-
-        [HttpPost]
-        public JsonResult ApproveStudents(List<int> studentIds)
-        {
-            List<int> approvedIds = new List<int>();
-            approvedIds =_studentService.ApproveStudents(studentIds);
-            return Json(new { });
-        }
     }
 }

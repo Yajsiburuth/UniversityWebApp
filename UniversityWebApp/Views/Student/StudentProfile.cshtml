@@ -15,11 +15,11 @@
     <script type="text/javascript" src="~/Scripts/studentScripts.js"></script>
     <script type="text/javascript" src="~/Scripts/studentProfileScripts.js"></script>
 </head>
-<body onload="loadDropdown(), loadStudentData()">
+<body onload="loadStudentData()">
     <div class="container">
-        <div class="title">Student Registration</div>
+        <div class="title">Student Profile</div>
         <div class="content">
-            <form onsubmit="createStudent()">
+            <form>
                 <div class="user-details">
                     <div class="input-box">
                         <span class="details">First Name</span>
@@ -45,36 +45,10 @@
                         <span class="details">Guardian's Name</span>
                         <input type="text" id="GuardianName" name="GuardianName" placeholder="Enter Guardian's name" required>
                     </div>
-                    <h2>HSC Result <button class="fa fa-plus" style="color:darkblue; border:0;background-color: transparent;font-size: larger;" onclick="addResultRow()" type="button" id="addButton"></button></h2>
-                    <div class="input-box-table">
-                        <table id="AddItemsTable">
-                            <tr>
-                                <th>Subject</th>
-                                <th>Result</th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <select required onchange="checkValue()" id="dropdownSubjects0" name="dropdownSubjects0" class="form-control">
-                                    </select>
-                                </td>
-                                <td>
-                                    <select required class="resultSelect" id="SubjectResult[0].Result" name="SubjectResult[0].Result">
-                                        <option label="-" value=""></option>
-                                        <option value="A">A - 10 Points</option>
-                                        <option value="B">B - 8 Points</option>
-                                        <option value="C">C - 6 Points</option>
-                                        <option value="D">D - 4 Points</option>
-                                        <option value="E">E - 2 Points</option>
-                                        <option value="F">F - 0 Points</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
                 </div>
                 <div class="action-buttons">
                     <div class="edit-btn">
-                        <button id="editButton" class="button-61" onclick="MakeAllCellsEditable()">Edit Details</button>
+                        <button id="editButton" class="button-61" onclick="enableInputs()">Edit Details</button>
                     </div>
                     <div class="cancel-btn">
                         <button id="cancelButton" disabled class="button-61" onclick="CancelChanges()">Cancel Changes</button>

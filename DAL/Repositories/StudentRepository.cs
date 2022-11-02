@@ -36,6 +36,7 @@ namespace DAL.Repositories
             }
             reader.Close();
             command.Dispose();
+            conn.Dispose();
             return students;
         }
 
@@ -62,6 +63,7 @@ namespace DAL.Repositories
             }
             reader.Close();
             command.Dispose();
+            conn.Dispose();
             return student;
         }
 
@@ -83,6 +85,7 @@ namespace DAL.Repositories
                 studentId = int.Parse(returnObj.ToString());
 
             command.Dispose();
+            conn.Dispose();
             return studentId;
         }
 
@@ -104,6 +107,7 @@ namespace DAL.Repositories
 
             command.ExecuteNonQuery();
             command.Dispose();
+            conn.Dispose();
         }
 
         public int GetStatus(int userId)
@@ -111,9 +115,9 @@ namespace DAL.Repositories
             SqlCommand command = new SqlCommand("SELECT Status FROM Student WHERE UserId = @UserId", conn);
             command.Parameters.AddWithValue("@UserId", userId);
             object returnObject = command.ExecuteScalar();
-            if(returnObject == null)
-                return -1;
-
+            command.Dispose();
+            conn.Dispose();
+            if(returnObject == null) return -1;
             return (Int16) returnObject;
         }
 
@@ -121,14 +125,20 @@ namespace DAL.Repositories
         {
             SqlCommand command = new SqlCommand("SELECT TOP 1 1 FROM Student WHERE NationalId = @NationalId", conn);
             command.Parameters.AddWithValue("@NationalId", nationalId);
-            if(command.ExecuteScalar() == null) return false;
+            object returnObject = command.ExecuteScalar();
+            command.Dispose();
+            conn.Close();
+            if (returnObject == null) return false;
             return true;
         }
         public bool CheckPhone(string phoneNumber)
         {
             SqlCommand command = new SqlCommand("SELECT TOP 1 1 FROM Student WHERE PhoneNumber = @PhoneNumber", conn);
             command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
-            if(command.ExecuteScalar() == null) return false;
+            object returnObject = command.ExecuteScalar();
+            command.Dispose();
+            conn.Close();
+            if (returnObject == null) return false;
             return true;
         }
 
@@ -174,14 +184,8 @@ namespace DAL.Repositories
             }
             reader.Close();
             command.Dispose();
+            conn.Dispose();
             return studentsSummary;
         }
-
-        public List<int> ApproveStudents(List<int> studentIds)
-        {
-            List<int> approvedStudents = new List<int>();
-            throw new NotImplementedException();
-        }
-
     }
 }

@@ -12,6 +12,5 @@ namespace BL.Services
         bool CheckDuplicateNationalId(string nationalId);
         bool CheckDuplicatePhone(string phoneNumber);
         List<StudentSummary> GetSummary();
-        List<int> ApproveStudents(List<int> studentIds);
     }
 }

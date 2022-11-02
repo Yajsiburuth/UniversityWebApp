@@ -175,6 +175,8 @@
     <Content Include="Content\css\form.css" />
     <Content Include="Content\css\home.css" />
     <Content Include="Content\css\login-registration.css" />
+    <Content Include="Content\images\ceridianlogo.svg" />
+    <Content Include="Content\images\DFLogo.svg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

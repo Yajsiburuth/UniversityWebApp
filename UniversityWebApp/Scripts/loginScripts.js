@@ -18,10 +18,6 @@ function register() {
     var email = document.querySelector("#email").value;
     var password = document.querySelector("#password").value;
     var confirmPassword = document.querySelector("#confirmPassword").value;
-/*    if (password != confirmPassword) {
-        toastr.error('Password does not match');
-        return false;
-    }*/
     var regObj = { Email: email, Password: password, ConfirmPassword: confirmPassword };
     var serverCall = new ServerCall({ url: "/User/Register", parameters: regObj, callMethod: "POST" })
     serverCall.fetchApiCall().then(response => {
@@ -48,9 +44,12 @@ function signIn() {
         if (response.result) {
             toastr.success("Authentication Successful");
             window.location = response.url;
+        } else if (response.errors) {
+            for (var error in response.errors) {
+                toastr.error(response.errors[error][0]);
+            }
         } else {
-            toastr.error("Unable to Authenticate");
-            return false;
+            toastr.error("Invalid Credentials");
         }
     })
 }

@@ -29,6 +29,7 @@ namespace DAL.Repositories
             }
             reader.Close();
             command.Dispose();
+            conn.Dispose();
             return users;
         }
 
@@ -51,6 +52,7 @@ namespace DAL.Repositories
             }
             reader.Close();
             command.Dispose();
+            conn.Dispose();
             return user;
         }
 
@@ -73,6 +75,7 @@ namespace DAL.Repositories
             }
             reader.Close();
             command.Dispose();
+            conn.Dispose();
             return user;
         }
 
@@ -85,6 +88,7 @@ namespace DAL.Repositories
             command.Parameters.AddWithValue("@Role", (int)user.Role);
             int rows = command.ExecuteNonQuery();
             command.Dispose();
+            conn.Dispose();
             return rows;
         }
 
@@ -97,6 +101,7 @@ namespace DAL.Repositories
             command.Parameters.AddWithValue("@Role", (int)user.Role);
             command.ExecuteNonQuery();
             command.Dispose();
+            conn.Dispose();
         }
     }
 }

@@ -1,12 +1,10 @@
-﻿using BL.Services;
-using DAL.Models;
+﻿using DAL.Models;
 using System.Web.Mvc;
 
 namespace UniversityWebApp.Controllers
 {
     public class HomeController : Controller
     { 
-        [Authorize]
         public ActionResult Index()
         {
             var loggedUser = Session["CurrentUser"] as User;
@@ -14,9 +12,12 @@ namespace UniversityWebApp.Controllers
             return view;
         }
 
-        [Authorize]
         public ActionResult Admin()
         {
+            if (Session == null)
+                return RedirectToAction("Login", "User");
+            if (Session["CurrentRole"].ToString() != "Admin")
+                return RedirectToAction("Index", "Home");
             return View();
         }
     }

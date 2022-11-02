@@ -11,23 +11,10 @@ namespace DAL.Repositories
     public class SubjectResultRepository : DatabaseHelper, IRepository<SubjectResult>, ISubjectResultRepository
     {
         string selectSQL = $"SELECT {SqlHelper.GetColumnNames(typeof(SubjectResult))} FROM [SubjectResult] ";
-        string insertSQL = $"INSERT INTO [SubjectResult] ({SqlHelper.GetColumnNames(typeof(SubjectResult), excludedProp: new HashSet<string>() { "SubjectResultId" })}) VALUES ({SqlHelper.GetColumnNames(typeof(SubjectResult), parameter: true, excludedProp: new HashSet<string>() { "SubjectResultId" })})";
 
         public int Create(SubjectResult subjectResult)
         {
-            int rows = 0;
-            SqlCommand command;
-            var subjectsAndResults = subjectResult.SubjectId.Zip(subjectResult.Grade, (s, r) => new { Subject = s, Grade = r });
-            foreach (var subjectAndResult in subjectsAndResults)
-            {
-                command = new SqlCommand(insertSQL, conn);
-                command.Parameters.AddWithValue("@StudentId", subjectResult.StudentId);
-                command.Parameters.AddWithValue("@SubjectId", subjectAndResult.Subject);
-                command.Parameters.AddWithValue("@Grade", (byte)subjectAndResult.Grade);
-                rows = command.ExecuteNonQuery();
-                command.Dispose();
-            }
-            return rows;
+            throw new NotImplementedException();
         }
 
         public void CreateResults(SubjectResult subjectResult)
@@ -54,6 +41,7 @@ namespace DAL.Repositories
             {
                 transaction.Rollback();
             }
+            conn.Dispose();
         }
 
 
@@ -72,6 +60,7 @@ namespace DAL.Repositories
             }
             reader.Close();
             command.Dispose();
+            conn.Dispose();
             return subjectResult;
         }
 
