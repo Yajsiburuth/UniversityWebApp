@@ -18,19 +18,23 @@ function register() {
     var email = document.querySelector("#email").value;
     var password = document.querySelector("#password").value;
     var confirmPassword = document.querySelector("#confirmPassword").value;
-    if (password != confirmPassword) {
+/*    if (password != confirmPassword) {
         toastr.error('Password does not match');
         return false;
-    }
-    var regObj = { Email: email, Password: password };
+    }*/
+    var regObj = { Email: email, Password: password, ConfirmPassword: confirmPassword };
     var serverCall = new ServerCall({ url: "/User/Register", parameters: regObj, callMethod: "POST" })
     serverCall.fetchApiCall().then(response => {
         if (response.result) {
             toastr.success("Successful Registration. Redirecting to Login Page");
             window.location = response.url;
-        } else {
+        } else if (response.url != null) {
             toastr.error("Email already exists");
-            return false;
+        } else {
+            for (var error in response.errors) {
+                console.log(response.errors[error][0]);
+                toastr.error(response.errors[error][0]);
+            }
         }
     })
 }

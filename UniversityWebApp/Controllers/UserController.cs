@@ -1,11 +1,11 @@
 ﻿using BL.Services;
 using DAL.Models;
-using DAL.Repositories;
 using DAL.ViewModels;
-using System.Web;
 using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using UniversityWebApp.Helper;
 
 namespace UniversityWebApp.Controllers
 {
@@ -20,6 +20,8 @@ namespace UniversityWebApp.Controllers
         [HttpPost]
         public JsonResult Register(UserViewModel userViewModel)
         {
+            if (!ModelState.IsValid) return Json(new { result = false, errors = ErrorHelper.ModelStateErrorsToDict(ModelState) });
+
             User user = _userService.Register(userViewModel.Email, userViewModel.Password);
             if (user == null) return Json(new { result = false, url = Url.Action("Login", "User") });
             return Json(new { result = true, url = Url.Action("Login", "User") });
@@ -31,6 +33,8 @@ namespace UniversityWebApp.Controllers
         [HttpPost]
         public JsonResult Authenticate(LoginUserViewModel loginUserViewModel)
         {
+            if (!ModelState.IsValid) return Json(new { result = false, errors = ErrorHelper.ModelStateErrorsToDict(ModelState) });
+
             User user = _userService.Authenticate(loginUserViewModel);
             if (user == null) return Json(new { result = false });
             int timeout = 525600;

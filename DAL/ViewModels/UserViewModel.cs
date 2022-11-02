@@ -6,6 +6,7 @@ namespace DAL.ViewModels
     {
         [Display(Name = "Email")]
         [Required (AllowEmptyStrings = false, ErrorMessage = "Email is required")]
+        [RegularExpression(".+@.+\\..+", ErrorMessage = "Please Enter Correct Email Address")]
         [DataType (DataType.EmailAddress)]
         public string Email { get; set; }
         [Display(Name = "Password")]
@@ -15,9 +16,9 @@ namespace DAL.ViewModels
         public string Password { get; set; }
 
         [Display(Name = "Confirm Password")]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
         [Required (AllowEmptyStrings = false, ErrorMessage = "You need to confirm your password")]
         [DataType (DataType.Password)]
-        [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
     }
 }
