@@ -137,7 +137,7 @@ function createStudent() {
     console.table(selectedSubjectList);
     console.table(selectedSubjectResultList);
 
-    studentDataObj = { FirstName: firstName, LastName: lastName, PhoneNumber: phoneNumber, DateOfBirth: dateOfBirth, NationalId: nationalId, GuardianName: guardianName }
+    studentDataObj = { FirstName: firstName, LastName: lastName, PhoneNumber: phoneNumber, DateOfBirth: dateOfBirth, NationalId: nationalId, GuardianName: guardianName, SubjectId: selectedSubjectList, Grade: selectedSubjectResultList }
     var studentServerCall = new ServerCall({ url: "/Student/CreateStudent", parameters: studentDataObj, callMethod: "POST" });
     studentServerCall.fetchApiCall().then(response => {
         if (response.result) {
@@ -155,9 +155,11 @@ function createStudent() {
                     return false;
                 }
             })
-        } else {
-            toastr.error('Unable to create new Student');
-            return false;
+        } else if (response.errors) {
+            for (var error in response.errors) {
+                console.log(response.errors[error][0]);
+                toastr.error(response.errors[error][0]);
+            }
         }
     })
 }

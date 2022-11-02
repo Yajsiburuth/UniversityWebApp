@@ -14,7 +14,6 @@ namespace UniversityWebApp.Controllers
         private readonly IUserService _userService;
         public UserController(IUserService userService) => _userService = userService;
 
-        [HttpGet]
         public ActionResult Register() => View();
 
         [HttpPost]
@@ -27,7 +26,6 @@ namespace UniversityWebApp.Controllers
             return Json(new { result = true, url = Url.Action("Login", "User") });
         }
 
-        [HttpGet]
         public ActionResult Login() => View();
 
         [HttpPost]
@@ -53,7 +51,6 @@ namespace UniversityWebApp.Controllers
             return Json(new { result = true, url });
         }
 
-        [HttpGet]
         public JsonResult GetUser() => Json(new { user = this.Session["CurrentUser"] }, JsonRequestBehavior.AllowGet);
 
         [Authorize]

@@ -2,8 +2,6 @@
 using DAL.Repositories;
 using DAL.ViewModels;
 using Helpers.Helper;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace BL.Services
 {

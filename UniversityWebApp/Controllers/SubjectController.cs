@@ -9,10 +9,6 @@ namespace UniversityWebApp.Controllers
         public SubjectController(ISubjectService subjectService) => _subjectService = subjectService;
 
         [HttpGet]
-        public JsonResult GetSubjects()
-        {
-            var subjectList = _subjectService.GetSubjects();
-            return Json(new { result = true, subjectList }, JsonRequestBehavior.AllowGet);
-        }
+        public JsonResult GetSubjects() => Json(new { result = true, subjectList = _subjectService.GetSubjects() }, JsonRequestBehavior.AllowGet);
     }
 }

@@ -117,6 +117,21 @@ namespace DAL.Repositories
             return (Int16) returnObject;
         }
 
+        public bool CheckNationalId(string nationalId)
+        {
+            SqlCommand command = new SqlCommand("SELECT TOP 1 1 FROM Student WHERE NationalId = @NationalId", conn);
+            command.Parameters.AddWithValue("@NationalId", nationalId);
+            if(command.ExecuteScalar() == null) return false;
+            return true;
+        }
+        public bool CheckPhone(string phoneNumber)
+        {
+            SqlCommand command = new SqlCommand("SELECT TOP 1 1 FROM Student WHERE PhoneNumber = @PhoneNumber", conn);
+            command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+            if(command.ExecuteScalar() == null) return false;
+            return true;
+        }
+
         public List<StudentSummary> GetSummary()
         {
             List<StudentSummary> studentsSummary = new List<StudentSummary>();
@@ -167,5 +182,6 @@ namespace DAL.Repositories
             List<int> approvedStudents = new List<int>();
             throw new NotImplementedException();
         }
+
     }
 }

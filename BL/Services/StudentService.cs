@@ -18,8 +18,11 @@ namespace BL.Services
             if(status == -1) return "Not Registered";
             return ((Status)status).ToString();
         }
+        public bool CheckDuplicateNationalId(string nationalId) => _studentRepository.CheckNationalId(nationalId);
+        public bool CheckDuplicatePhone(string phoneNumber) => _studentRepository.CheckPhone(phoneNumber);
         public List<StudentSummary> GetSummary() => _studentRepository.GetSummary();
 
         public List<int> ApproveStudents(List<int> studentIds) => _studentRepository.ApproveStudents(studentIds);
+
     }
 }

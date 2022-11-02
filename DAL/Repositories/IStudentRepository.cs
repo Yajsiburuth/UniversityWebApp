@@ -8,6 +8,8 @@ namespace DAL.Repositories
     {
         List<int> ApproveStudents(List<int> studentIds);
         int GetStatus(int UserId);
+        bool CheckNationalId(string nationalId);
+        bool CheckPhone(string nationalId);
         List<StudentSummary> GetSummary();
 
     }

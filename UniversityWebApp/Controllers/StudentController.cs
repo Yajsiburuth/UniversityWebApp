@@ -1,7 +1,9 @@
 ﻿using BL.Services;
 using DAL.Models;
+using DAL.ViewModels;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using UniversityWebApp.Helper;
 
 namespace UniversityWebApp.Controllers
 {
@@ -11,22 +13,29 @@ namespace UniversityWebApp.Controllers
         public StudentController(IStudentService studentService) => _studentService = studentService;
 
         [Authorize]
-        [HttpGet]
         public ActionResult Register() => View();
 
-        [HttpGet]
         public ActionResult StudentProfile() => View();
 
         [HttpPost]
-        public JsonResult CreateStudent(Student student)
+        public JsonResult CreateStudent(StudentViewModel studentViewModel)
         {
+            if (_studentService.CheckDuplicateNationalId(studentViewModel.NationalId)) ModelState.AddModelError("NationalId", "This National Id has already been registered");
+            if (_studentService.CheckDuplicatePhone(studentViewModel.PhoneNumber)) ModelState.AddModelError("PhoneNumber", "This Phone Number has already been registered");
+            if (!ModelState.IsValid) return Json(new { result = false, errors = ErrorHelper.ModelStateErrorsToDict(ModelState) });
+            Student student = new Student();
+            student.FirstName = studentViewModel.FirstName;
+            student.LastName = studentViewModel.LastName; 
+            student.PhoneNumber = studentViewModel.PhoneNumber;
+            student.DateOfBirth = studentViewModel.DateOfBirth;
+            student.GuardianName = studentViewModel.GuardianName;
+            student.NationalId = studentViewModel.NationalId;
             var loggedUser = Session["CurrentUser"] as User;
             student.UserId = loggedUser.UserId;
             int studentId = _studentService.RegisterStudent(student);
             return Json(new { result = studentId > 0, studentId });
         }
 
-        [HttpGet]
         public JsonResult GetDetails()
         {
             Student student = _studentService.GetStudent(int.Parse(Session["CurrentUserId"].ToString()));
@@ -34,7 +43,6 @@ namespace UniversityWebApp.Controllers
             return Json(new { studentDetails = student }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
         public JsonResult GetStatus()
         {
             int userId = (int) Session["CurrentUserId"];
