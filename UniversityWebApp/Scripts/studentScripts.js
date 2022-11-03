@@ -118,6 +118,7 @@ function addSubjectsToDropdown(dropdown) {
 function createStudent() {
     var firstName = document.querySelector('#FirstName').value;
     var lastName = document.querySelector('#LastName').value;
+    var address = document.querySelector('#Address').value;
     var phoneNumber = document.querySelector('#PhoneNumber').value;
     var dateOfBirth = document.querySelector('#DateOfBirth').value;
     var nationalId = document.querySelector('#NationalId').value;
@@ -125,7 +126,7 @@ function createStudent() {
     var studentId;
     var selectedSubjectList = [];
     var selectedSubjectResultList = [];
-    console.log(firstName, lastName, phoneNumber, dateOfBirth, nationalId, guardianName);
+    console.log(firstName, lastName, address, phoneNumber, dateOfBirth, nationalId, guardianName);
 
     for (var i = 0; i < dictSubjectList.length; i++) {
         var dropdownId = dictSubjectList[i].dropdownId;
@@ -137,7 +138,7 @@ function createStudent() {
     console.table(selectedSubjectList);
     console.table(selectedSubjectResultList);
 
-    studentDataObj = { FirstName: firstName, LastName: lastName, PhoneNumber: phoneNumber, DateOfBirth: dateOfBirth, NationalId: nationalId, GuardianName: guardianName, SubjectId: selectedSubjectList, Grade: selectedSubjectResultList }
+    studentDataObj = { FirstName: firstName, LastName: lastName, Address: address, PhoneNumber: phoneNumber, DateOfBirth: dateOfBirth, NationalId: nationalId, GuardianName: guardianName, SubjectId: selectedSubjectList, Grade: selectedSubjectResultList }
     var studentServerCall = new ServerCall({ url: "/Student/CreateStudent", parameters: studentDataObj, callMethod: "POST" });
     studentServerCall.fetchApiCall().then(response => {
         if (response.result) {

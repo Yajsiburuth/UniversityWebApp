@@ -41,6 +41,7 @@ function AddDataToTable(studentSummaryList) {
         row.innerHTML = '<td>' + `${summary.StudentId}` + '</td>'
             + '<td>' + `${summary.FirstName}` + '</td>'
             + '<td>' + `${summary.LastName}` + '</td>'
+            + '<td>' + `${summary.Address}` + '</td>'
             + '<td>' + `${summary.PhoneNumber}` + '</td>'
             + '<td>' + `${new Date(parseInt(summary.DateOfBirth.replace(/[^0-9 +]/g, ''))).toLocaleDateString()}` + '</td>'
             + '<td>' + `${summary.GuardianName}` + '</td>'

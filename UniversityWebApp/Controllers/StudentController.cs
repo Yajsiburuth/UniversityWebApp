@@ -26,10 +26,11 @@ namespace UniversityWebApp.Controllers
             if (!ModelState.IsValid) return Json(new { result = false, errors = ErrorHelper.ModelStateErrorsToDict(ModelState) });
             Student student = new Student();
             student.FirstName = studentViewModel.FirstName;
-            student.LastName = studentViewModel.LastName; 
+            student.LastName = studentViewModel.LastName;
+            student.Address = studentViewModel.Address;
             student.PhoneNumber = studentViewModel.PhoneNumber;
             student.DateOfBirth = studentViewModel.DateOfBirth;
-            student.GuardianName = studentViewModel.GuardianName;
+            student.GuardianName = studentViewModel.GuardianName ?? "";
             student.NationalId = studentViewModel.NationalId;
             var loggedUser = Session["CurrentUser"] as User;
             student.UserId = loggedUser.UserId;

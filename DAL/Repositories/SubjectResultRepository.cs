@@ -41,7 +41,7 @@ namespace DAL.Repositories
             {
                 transaction.Rollback();
             }
-            conn.Dispose();
+            
         }
 
 
@@ -60,7 +60,7 @@ namespace DAL.Repositories
             }
             reader.Close();
             command.Dispose();
-            conn.Dispose();
+            
             return subjectResult;
         }
 

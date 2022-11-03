@@ -15,7 +15,12 @@ namespace DAL.ViewModels
         [Display(Name = "Lastname")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Lastname cannot be empty")]
         [DataType(DataType.Text)]
+
         public string LastName { get; set; }
+        [Display(Name = "Address")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Address cannot be empty")]
+        [DataType(DataType.Text)]
+        public string Address { get; set; }
 
         [Display(Name = "Phone Number")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Phone number cannot be empty")]
@@ -34,7 +39,7 @@ namespace DAL.ViewModels
         [RegularExpression("[A-Z][0-9]{12}[A-Z0-9]", ErrorMessage = "Invalid National Id format")]
         public string NationalId { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Guardian name must be set")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Guardian name must be set")]
         [DataType(DataType.Text)]
         public string GuardianName { get; set; }
 

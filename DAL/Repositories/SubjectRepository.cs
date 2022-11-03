@@ -35,7 +35,7 @@ namespace DAL.Repositories
             }
             reader.Close();
             command.Dispose();
-            conn.Dispose();
+            
             return subjects;
         }
 

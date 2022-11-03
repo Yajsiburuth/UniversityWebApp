@@ -23,6 +23,7 @@ function loadStudentData() {
 function insertDataToInputs(studentDetails) {
     $("#FirstName").val(studentDetails["FirstName"]).prop("disabled", true);
     $("#LastName").val(studentDetails["LastName"]).prop("disabled", true);
+    $("#Address").val(studentDetails["Address"]).prop("disabled", true);
     $("#PhoneNumber").val(studentDetails["PhoneNumber"]).prop("disabled", true);
     $("#DateOfBirth").val(convertMillisecondsToDate(studentDetails["DateOfBirth"].replace(/[^0-9 +]/g, ''))).prop("disabled", true);
     $("#NationalId").val(studentDetails["NationalId"]).prop("disabled", true);
@@ -32,6 +33,7 @@ function insertDataToInputs(studentDetails) {
 function enableInputs() {
     $("#FirstName").prop("disabled", false);
     $("#LastName").prop("disabled", false);
+    $("#Address").prop("disabled", false);
     $("#PhoneNumber").prop("disabled", false);
     $("#DateOfBirth").prop("disabled", false);
     $("#NationalId").prop("disabled", false);

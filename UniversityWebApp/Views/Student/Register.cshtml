@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
+    <title>Student Registration</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
@@ -28,6 +28,10 @@
                         <input type="text" id="LastName" name="LastName" placeholder="Lastname" required>
                     </div>
                     <div class="input-box">
+                        <span class="details">Address</span>
+                        <input type="text" id="Address" name="Address" placeholder="Address" required>
+                    </div>
+                    <div class="input-box">
                         <span class="details">Phone Number</span>
                         <input type="text" id="PhoneNumber" name="PhoneNumber" placeholder="Enter your Phone Number" required>
                     </div>
@@ -43,6 +47,7 @@
                         <span class="details">Guardian's Name</span>
                         <input type="text" id="GuardianName" name="GuardianName" placeholder="Enter Guardian's name" required>
                     </div>
+                </div>
                     <h2>HSC Result <button class="fa fa-plus" style="color:darkblue; border:0;background-color: transparent;font-size: larger;" onclick="addResultRow()" type="button" id="addButton"></button></h2>
                     <div class="input-box-table">
                         <table id="AddItemsTable">
@@ -69,7 +74,6 @@
                             </tr>
                         </table>
                     </div>
-                </div>
                 <div class="button">
                     <input type="submit" value="Register">
                 </div>
